@@ -3,13 +3,14 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <memory>
 #include <string_view>
 #include <vector>
 
 auto
 Tokenizer::tokenize_instruction() -> std::string_view
 {
-    auto* temp_token = new std::vector<char>;
+    auto temp_token = std::make_shared<std::vector<char>>();
 
     for (auto i = this->current_header; i < this->content.size(); ++i) {
         if (this->content[i] == ' ' || this->content[i] == '\n' || this->content[i] == '\t' ||
