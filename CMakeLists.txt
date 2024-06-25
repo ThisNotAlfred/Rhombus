@@ -13,11 +13,13 @@ target_sources(
     "${Rhombus_SOURCE_DIR}/rhombus.cpp"
     "${Rhombus_SOURCE_DIR}/tokenizer.cpp"
     "${Rhombus_SOURCE_DIR}/parser.cpp"
+    "${Rhombus_SOURCE_DIR}/runner.cpp"
 
     # headers
     "${Rhombus_INCLUDE_DIR}/tokenizer.hpp"
     "${Rhombus_INCLUDE_DIR}/parser.hpp"
     "${Rhombus_INCLUDE_DIR}/instruction.hpp"
+    "${Rhombus_INCLUDE_DIR}/runner.hpp"
 )
 
 target_include_directories(Rhombus PRIVATE "${Rhombus_INCLUDE_DIR}/")
