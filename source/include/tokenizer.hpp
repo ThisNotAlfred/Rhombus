@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string_view>
 #include <vector>
 
@@ -14,7 +15,6 @@ class Tokenizer
     auto tokenize_instruction() -> std::string_view;
 
         private:
-    std::vector<char> content  = {};
+    std::vector<char> content;
     std::size_t current_header = 0;
-    std::size_t last_header    = 0;
 };

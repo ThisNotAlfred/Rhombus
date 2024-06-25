@@ -1,9 +1,10 @@
-#include "runner.hpp"
 #include "parser.hpp"
+#include "runner.hpp"
 #include "tokenizer.hpp"
 
 #include <algorithm>
 #include <filesystem>
+#include <format>
 #include <fstream>
 #include <iostream>
 #include <string_view>
@@ -36,6 +37,8 @@ main(int argc, char* argv[]) -> int
 
     auto contents  = read_file(argv[1]);
     auto tokenized = Tokenizer(contents).tokenize();
+    std::for_each(tokenized.begin(), tokenized.end(),
+                  [](auto element) { std::cout << element << ";"; });
     auto parsed = Parser(tokenized).parse();
     auto runner = Runner(parsed);
     runner.run();

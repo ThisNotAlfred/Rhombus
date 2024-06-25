@@ -10,7 +10,7 @@
 auto
 Tokenizer::tokenize_instruction() -> std::string_view
 {
-    auto temp_token = std::make_shared<std::vector<char>>();
+    auto temp_token = std::make_unique<std::vector<char>>();
 
     for (auto i = this->current_header; i < this->content.size(); ++i) {
         if (this->content[i] == ' ' || this->content[i] == '\n' || this->content[i] == '\t' ||
@@ -19,12 +19,12 @@ Tokenizer::tokenize_instruction() -> std::string_view
             break;
         }
 
-        temp_token->push_back(std::tolower(this->content[i]));
+        temp_token->emplace_back(this->content[i]);
 
         ++this->current_header;
     }
 
-    return std::string_view { temp_token->begin(), temp_token->end() };
+    return { temp_token->begin(), temp_token->end() };
 }
 
 auto
@@ -54,6 +54,10 @@ Tokenizer::tokenize() -> std::vector<std::string_view>
         // moving header one forward
         ++this->current_header;
     }
+
+    tokens.erase(std::remove_if(tokens.begin(), tokens.end(),
+                                [](auto& element) { return element.size() < 1; }),
+                 tokens.end());
 
     return std::move(tokens);
 }
