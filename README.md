@@ -6,7 +6,7 @@ it's work in progress so please be patient. development might be slow.
 
 
 ## instructions
-each instruction can be one these forms:
+each instruction can be one of these forms:
 | instruction | first register | second register |
 | ----------- | -------------- | --------------- |
 | no register | - | - |
