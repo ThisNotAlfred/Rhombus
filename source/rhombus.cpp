@@ -10,15 +10,14 @@
 #include <string_view>
 
 auto
-read_file(const char* path) -> std::vector<char>
+read_file(const char* path) -> std::string
 {
     auto file_size = std::filesystem::file_size(path);
     std::ifstream file(path, std::ios::in | std::ios::binary);
 
-    std::vector<char> contents((std::istreambuf_iterator<char>(file)),
-                               std::istreambuf_iterator<char>());
+    std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
-    return std::move(contents);
+    return contents;
 }
 
 auto
@@ -37,10 +36,8 @@ main(int argc, char* argv[]) -> int
 
     auto contents  = read_file(argv[1]);
     auto tokenized = Tokenizer(contents).tokenize();
-    std::for_each(tokenized.begin(), tokenized.end(),
-                  [](auto element) { std::cout << element << ";"; });
-    auto parsed = Parser(tokenized).parse();
-    auto runner = Runner(parsed);
+    auto parsed    = Parser(tokenized).parse();
+    auto runner    = Runner(parsed);
     runner.run();
 
     return 0;

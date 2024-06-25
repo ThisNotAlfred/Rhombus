@@ -4,13 +4,14 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
+#include <string>
 #include <string_view>
 #include <vector>
 
 auto
-Tokenizer::tokenize_instruction() -> std::string_view
+Tokenizer::tokenize_instruction() -> std::string
 {
-    auto temp_token = std::make_unique<std::vector<char>>();
+    std::vector<char> temp_token = {};
 
     for (auto i = this->current_header; i < this->content.size(); ++i) {
         if (this->content[i] == ' ' || this->content[i] == '\n' || this->content[i] == '\t' ||
@@ -19,18 +20,22 @@ Tokenizer::tokenize_instruction() -> std::string_view
             break;
         }
 
-        temp_token->emplace_back(this->content[i]);
+        temp_token.push_back(this->content[i]);
 
         ++this->current_header;
     }
 
-    return { temp_token->begin(), temp_token->end() };
+    auto token = std::string_view { temp_token.begin(), temp_token.end() };
+
+    std::cout << token << " - ";
+
+    return { token.begin(), token.end() };
 }
 
 auto
-Tokenizer::tokenize() -> std::vector<std::string_view>
+Tokenizer::tokenize() -> std::vector<std::string>
 {
-    std::vector<std::string_view> tokens = {};
+    std::vector<std::string> tokens;
 
     for (const auto& chr : this->content) {
         // skipping whitespaces
@@ -43,13 +48,8 @@ Tokenizer::tokenize() -> std::vector<std::string_view>
             continue;
         }
 
-        // reading semi-colons
-        if (chr == ';') {
-            tokens.emplace_back(";");
-        }
-
         // reading whole tokens of instructions
-        tokens.emplace_back(this->tokenize_instruction());
+        tokens.push_back(this->tokenize_instruction());
 
         // moving header one forward
         ++this->current_header;
@@ -59,5 +59,5 @@ Tokenizer::tokenize() -> std::vector<std::string_view>
                                 [](auto& element) { return element.size() < 1; }),
                  tokens.end());
 
-    return std::move(tokens);
+    return tokens;
 }

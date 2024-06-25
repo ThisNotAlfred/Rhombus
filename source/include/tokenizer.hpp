@@ -7,14 +7,13 @@
 class Tokenizer
 {
         public:
-    Tokenizer(std::vector<char>& content) : content(content) {};
+    Tokenizer(std::string& content) : content(content) {};
     ~Tokenizer() = default;
 
-    auto tokenize() -> std::vector<std::string_view>;
-
-    auto tokenize_instruction() -> std::string_view;
+    auto tokenize() -> std::vector<std::string>;
+    auto tokenize_instruction() -> std::string;
 
         private:
-    std::vector<char> content;
+    std::string_view content;
     std::size_t current_header = 0;
 };
