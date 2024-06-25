@@ -11,9 +11,11 @@ target_sources(
 
     # sources
     "${Rhombus_SOURCE_DIR}/rhombus.cpp"
-    "${Rhombus_SOURCE_DIR}/parser.cpp"    
+    "${Rhombus_SOURCE_DIR}/tokenizer.cpp"
+    "${Rhombus_SOURCE_DIR}/parser.cpp"
 
     # headers
+    "${Rhombus_INCLUDE_DIR}/tokenizer.hpp"
     "${Rhombus_INCLUDE_DIR}/parser.hpp"
 )
 
