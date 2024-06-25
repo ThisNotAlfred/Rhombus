@@ -34,8 +34,8 @@ main(int argc, char* argv[]) -> int
     }
 
     auto contents  = read_file(argv[1]);
-    auto tokenizer = Tokenizer(contents).tokenize();
-    // auto parser = Parser(tokenizer.tokenize());
+    auto tokenized = Tokenizer(contents).tokenize();
+    auto parser = Parser(tokenized);
     // Runner::run(Parser.parser());
 
     return 0;
