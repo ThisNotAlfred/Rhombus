@@ -17,6 +17,7 @@ target_sources(
     # headers
     "${Rhombus_INCLUDE_DIR}/tokenizer.hpp"
     "${Rhombus_INCLUDE_DIR}/parser.hpp"
+    "${Rhombus_INCLUDE_DIR}/instruction.hpp"
 )
 
 target_include_directories(Rhombus PRIVATE "${Rhombus_INCLUDE_DIR}/")
