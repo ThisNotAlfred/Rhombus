@@ -1,6 +1,5 @@
 # Rhombus
-a minimal virtual machine inspired by brainf**k and riscv32.
-
+a minimal virtual machine inspired by riscv32.
 
 it's work in progress so please be patient. development might be slow.
 
