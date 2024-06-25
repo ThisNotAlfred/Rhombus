@@ -1,8 +1,17 @@
 #include "instruction.hpp"
 
-class Runner {
-    public:
+#include <cstdint>
+#include <vector>
 
+class Runner
+{
+        public:
+    Runner(std::vector<Instruction>& instructions) : instructions(instructions) {};
+    ~Runner() = default;
 
-    private:
+    auto run() -> void;
+
+        private:
+    std::vector<Instruction> instructions;
+    std::vector<std::uint32_t> memory;
 };
