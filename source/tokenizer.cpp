@@ -19,7 +19,7 @@ Tokenizer::tokenize_instruction() -> std::string_view
             break;
         }
 
-        temp_token->push_back(this->content[i]);
+        temp_token->push_back(std::tolower(this->content[i]));
 
         ++this->current_header;
     }
