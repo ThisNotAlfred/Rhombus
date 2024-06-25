@@ -25,11 +25,9 @@ Tokenizer::tokenize_instruction() -> std::string
         ++this->current_header;
     }
 
-    auto token = std::string_view { temp_token.begin(), temp_token.end() };
+    auto token = std::string { temp_token.begin(), temp_token.end() };
 
-    std::cout << token << " - ";
-
-    return { token.begin(), token.end() };
+    return token;
 }
 
 auto

@@ -8,7 +8,7 @@
 class Parser
 {
         public:
-    Parser(std::vector<std::string_view>& tokens) : tokens(tokens) {};
+    Parser(std::vector<std::string>& tokens) : tokens(tokens) {};
     ~Parser() = default;
 
     auto parse() -> std::vector<Instruction>;
@@ -18,5 +18,5 @@ class Parser
     auto two_reg(std::size_t index) -> Instruction;
 
         private:
-    std::vector<std::string_view> tokens = {};
+    std::vector<std::string>& tokens;
 };
