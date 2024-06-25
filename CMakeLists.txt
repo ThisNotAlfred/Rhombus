@@ -11,6 +11,8 @@ target_sources(
 
     # sources
     "${Rhombus_SOURCE_DIR}/rhombus.cpp"
+    "${Rhombus_SOURCE_DIR}/parser.cpp"    
 
     # headers
+    "${Rhombus_INCLUDE_DIR}/parser.hpp"
 )
