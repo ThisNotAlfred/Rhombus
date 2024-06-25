@@ -1,16 +1,20 @@
 #include "parser.hpp"
+#include "tokenizer.hpp"
 
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <string_view>
 
 auto
-read_file(const char* path) -> std::string
+read_file(const char* path) -> std::vector<char>
 {
     auto file_size = std::filesystem::file_size(path);
     std::ifstream file(path, std::ios::in | std::ios::binary);
 
-    std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    std::vector<char> contents((std::istreambuf_iterator<char>(file)),
+                               std::istreambuf_iterator<char>());
 
     return std::move(contents);
 }
@@ -29,10 +33,10 @@ main(int argc, char* argv[]) -> int
         return -1;
     }
 
-    auto contents = read_file(argv[1]);
-    std::cout << contents;
-    // auto prased   = parse_asm(contents);
-    // run(parsed_asm);
+    auto contents  = read_file(argv[1]);
+    auto tokenizer = Tokenizer(contents).tokenize();
+    // auto parser = Parser(tokenizer.tokenize());
+    // Runner::run(Parser.parser());
 
     return 0;
 }

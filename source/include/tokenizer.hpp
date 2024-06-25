@@ -1,7 +1,18 @@
 #include <string_view>
 #include <vector>
 
-class Parser
+class Tokenizer
 {
-    auto tokenize(std::string_view& content) -> std::vector<std::string_view>;
+        public:
+    Tokenizer(std::vector<char>& content) : content(content) {};
+    ~Tokenizer() = default;
+
+    auto tokenize() -> std::vector<std::string_view>;
+
+    auto tokenize_instruction() -> std::string_view;
+
+        private:
+    std::vector<char> content  = {};
+    std::size_t current_header = 0;
+    std::size_t last_header    = 0;
 };
