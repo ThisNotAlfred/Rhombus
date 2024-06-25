@@ -1,3 +1,5 @@
+#pragma once
+
 #include <variant>
 
 using Register = std::size_t;
