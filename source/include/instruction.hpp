@@ -35,4 +35,3 @@ struct InstTwoReg {
 };
 
 using Instruction = std::variant<InstNoReg, InstOneReg, InstTwoReg>;
-

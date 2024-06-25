@@ -11,6 +11,10 @@ class Parser
 
     auto parse() -> std::vector<Instruction>;
 
+    auto no_reg(std::size_t index) -> Instruction;
+    auto one_reg(std::size_t index) -> Instruction;
+    auto two_reg(std::size_t index) -> Instruction;
+
         private:
     std::vector<std::string_view> tokens = {};
 };
