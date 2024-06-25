@@ -16,3 +16,5 @@ target_sources(
     # headers
     "${Rhombus_INCLUDE_DIR}/parser.hpp"
 )
+
+target_include_directories(Rhombus PRIVATE "${Rhombus_INCLUDE_DIR}/")
