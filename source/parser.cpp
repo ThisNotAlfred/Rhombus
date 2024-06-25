@@ -1,5 +1,6 @@
 #include "parser.hpp"
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -7,8 +8,9 @@
 auto
 Parser::two_reg(std::size_t index) -> Instruction
 {
-    auto first_reg  = std::stoul(this->tokens[index + 1].data());
-    auto second_reg = std::stoul(this->tokens[index + 2].data());
+    auto first_reg  = std::stoul(this->tokens[index + 1]);
+    auto second_reg = std::stoul(this->tokens[index + 2]);
+
 
     if (tokens[index] == "mov") {
         return Instruction {
@@ -71,33 +73,33 @@ Parser::two_reg(std::size_t index) -> Instruction
 auto
 Parser::one_reg(std::size_t index) -> Instruction
 {
-    auto first_reg = std::stoul(this->tokens[index + 1].data());
+    auto first_reg = std::stoul(this->tokens[index + 1]);
 
-    if (tokens[index] == "JMPE") {
+    if (tokens[index] == "jmpe") {
         return Instruction {
             InstOneReg {InstOneReg::JMPE, first_reg}
         };
     }
 
-    if (tokens[index] == "JMPS") {
+    if (tokens[index] == "jmps") {
         return Instruction {
             InstOneReg {InstOneReg::JMPS, first_reg}
         };
     }
 
-    if (tokens[index] == "JMPB") {
+    if (tokens[index] == "jmpb") {
         return Instruction {
             InstOneReg {InstOneReg::JMPB, first_reg}
         };
     }
 
-    if (tokens[index] == "SCAN") {
+    if (tokens[index] == "scan") {
         return Instruction {
             InstOneReg {InstOneReg::SCAN, first_reg}
         };
     }
 
-    if (tokens[index] == "PRINT") {
+    if (tokens[index] == "print") {
         return Instruction {
             InstOneReg {InstOneReg::PRINT, first_reg}
         };
@@ -123,21 +125,23 @@ auto
 Parser::parse() -> std::vector<Instruction>
 {
     std::vector<Instruction> instructions = {};
-
     for (auto i = 0; i < this->tokens.size(); ++i) {
+
         if (this->tokens[i] == "mov" || this->tokens[i] == "shr" || this->tokens[i] == "add" ||
             this->tokens[i] == "sub" || this->tokens[i] == "xor" || this->tokens[i] == "or" ||
             this->tokens[i] == "and" || this->tokens[i] == "cmpr") {
             instructions.emplace_back(this->two_reg(i));
-            i += 3;
-        } else if (this->tokens[i] == "jmpe" || this->tokens[i] == "jmpb" ||
-                   this->tokens[i] == "jmps" || this->tokens[i] == "print" ||
-                   this->tokens[i] == "scan") {
-            instructions.emplace_back(this->one_reg(i));
             i += 2;
-        } else if (this->tokens[i] == "nop") {
-            instructions.emplace_back(this->no_reg(i));
+        }
+
+        if (this->tokens[i] == "jmpe" || this->tokens[i] == "jmpb" || this->tokens[i] == "jmps" ||
+            this->tokens[i] == "print" || this->tokens[i] == "scan") {
+            instructions.emplace_back(this->one_reg(i));
             i += 1;
+        }
+
+        if (this->tokens[i] == "nop") {
+            instructions.emplace_back(this->no_reg(i));
         }
     }
 

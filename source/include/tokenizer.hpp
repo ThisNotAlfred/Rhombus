@@ -11,6 +11,8 @@ class Tokenizer
     ~Tokenizer() = default;
 
     auto tokenize() -> std::vector<std::string>;
+
+    auto tokenize_brackets() -> std::string;
     auto tokenize_instruction() -> std::string;
 
         private:
