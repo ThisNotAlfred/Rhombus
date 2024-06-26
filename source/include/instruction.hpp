@@ -10,6 +10,7 @@ struct InstNoReg {
 
 struct InstOneReg {
     enum {
+        JMP,
         JMPE,
         JMPB,
         JMPS,
@@ -29,7 +30,8 @@ struct InstTwoReg {
         XOR,
         OR,
         AND,
-        CMPR,
+        CMPRE,
+        CMPRS,
     } instruction;
 
     Register source;

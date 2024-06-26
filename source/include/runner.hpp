@@ -3,6 +3,7 @@
 #include "instruction.hpp"
 
 #include <cstdint>
+#include <functional>
 #include <vector>
 
 class Runner
@@ -12,6 +13,13 @@ class Runner
     ~Runner() = default;
 
     auto run() -> void;
+
+    auto check_for_flags(std::uint16_t source, std::uint16_t dest,
+                        const std::function<uint16_t(uint16_t, uint16_t)>& opr) -> void;
+    auto set_negative() -> void;
+    auto set_zero() -> void;
+    auto set_overflow() -> void;
+    auto set_carry() -> void;
 
         private:
     std::vector<Instruction>& instructions;

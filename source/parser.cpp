@@ -26,43 +26,49 @@ Parser::two_reg(std::size_t index) -> Instruction
 
     if (tokens[index] == "sub") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::SUB, first_reg, second_reg}
         };
     }
 
     if (tokens[index] == "xor") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::XOR, first_reg, second_reg}
         };
     }
 
     if (tokens[index] == "or") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::OR, first_reg, second_reg}
         };
     }
 
     if (tokens[index] == "and") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::AND, first_reg, second_reg}
         };
     }
 
     if (tokens[index] == "shr") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::SHR, first_reg, second_reg}
         };
     }
 
     if (tokens[index] == "shl") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::SHL, first_reg, second_reg}
         };
     }
 
-    if (tokens[index] == "cmpr") {
+    if (tokens[index] == "cmpre") {
         return Instruction {
-            InstTwoReg {InstTwoReg::MOV, first_reg, second_reg}
+            InstTwoReg {InstTwoReg::CMPRE, first_reg, second_reg}
+        };
+    }
+
+    if (tokens[index] == "cmprs") {
+        return Instruction {
+            InstTwoReg {InstTwoReg::CMPRS, first_reg, second_reg}
         };
     }
 
@@ -74,6 +80,12 @@ auto
 Parser::one_reg(std::size_t index) -> Instruction
 {
     auto first_reg = std::stoul(this->tokens[index + 1]);
+
+    if (tokens[index] == "jmp") {
+        return Instruction {
+            InstOneReg {InstOneReg::JMP, first_reg}
+        };
+    }
 
     if (tokens[index] == "jmpe") {
         return Instruction {
@@ -129,13 +141,13 @@ Parser::parse() -> std::vector<Instruction>
 
         if (this->tokens[i] == "mov" || this->tokens[i] == "shr" || this->tokens[i] == "add" ||
             this->tokens[i] == "sub" || this->tokens[i] == "xor" || this->tokens[i] == "or" ||
-            this->tokens[i] == "and" || this->tokens[i] == "cmpr") {
+            this->tokens[i] == "and" || this->tokens[i] == "cmpre" || this->tokens[i] == "cmprs") {
             instructions.emplace_back(this->two_reg(i));
             i += 2;
         }
 
-        if (this->tokens[i] == "jmpe" || this->tokens[i] == "jmpb" || this->tokens[i] == "jmps" ||
-            this->tokens[i] == "print" || this->tokens[i] == "scan") {
+        if (this->tokens[i] == "jmp" || this->tokens[i] == "jmpe" || this->tokens[i] == "jmpb" ||
+            this->tokens[i] == "jmps" || this->tokens[i] == "print" || this->tokens[i] == "scan") {
             instructions.emplace_back(this->one_reg(i));
             i += 1;
         }
