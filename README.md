@@ -46,3 +46,41 @@ each instruction can be one of these forms:
 ## memory
 
 the machine has 128KB of fixed-size memory that you can access. your **appends** to this amount and doesn't take anything from it.
+
+# Example
+
+## basic hello world
+
+```asm
+mov 72 , [0]
+print [0]
+
+mov 69 , [1]
+print [1]
+
+mov 76 , [2]
+print [2]
+print [2]
+
+mov 79 , [3]
+print [3]
+
+mov 32 , [4]
+print [4]
+
+mov 87 , [5]
+print [5]
+
+print [3]
+
+mov 82 , [6]
+print 6
+
+print [2]
+
+mov 68 , [7]
+print [7]
+
+mov 33 , [8]
+print [8]
+```
