@@ -22,7 +22,8 @@ each instruction can be one of these forms:
 | `xor` | xor-ing data at determined memory cell by value | `xor 17 , [34]` |
 | `or` | or-ing data to determined memory cell by value | `or 18 , [5]` |
 | `and` | and-ing data to determined memory cell by value | `and 1 , [1]` |
-| `cmpr` | comparing data to determined memory cell | `cpmr 23 , [11]` |
+| `cmpre` | compareing data to determined memory cell for equality | `cmpre 23, [23]` |
+| `cmprs` | comparing data to detemined memory cell for **value** being smaller | `cmprs 23, [45]` |
 | `jmpe` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 1` | `jmpe [132]` |
 | `jmpb` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 0` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
 | `jmps` | jumping to determined memory cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
