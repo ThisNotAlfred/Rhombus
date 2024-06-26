@@ -13,7 +13,8 @@ class Runner
     ~Runner() = default;
 
     auto start() -> void;
-    auto run_instruction(const Instruction& instructio) -> void;
+
+    auto run_instruction(const Instruction& instruction) -> void;
 
     auto check_for_flags(std::uint16_t source, std::uint16_t dest,
                          const std::function<uint16_t(uint16_t, uint16_t)>& opr) -> void;
@@ -25,7 +26,7 @@ class Runner
         private:
     std::vector<Instruction>& instructions;
 
-    std::vector<std::uint32_t> memory = {};
+    std::vector<std::uint16_t> memory = {};
     std::size_t instruction_pointer   = 0;
 
     bool negative_flag = false;

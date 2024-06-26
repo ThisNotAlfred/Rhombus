@@ -5,6 +5,16 @@
 #include <utility>
 #include <variant>
 
+auto
+Runner::start() -> void
+{
+    // resizing from 0 to 128KB (2^^16 * 8 / 1024 * 16)
+    memory.resize(static_cast<std::size_t>(65536 * 8 / 1024));
+
+    for (const auto& instruction : this->instructions) {
+        this->run_instruction(instruction);
+    }
+}
 
 auto
 Runner::run_instruction(const Instruction& instruction) -> void
@@ -49,7 +59,7 @@ Runner::run_instruction(const Instruction& instruction) -> void
                 break;
 
             case InstOneReg::PRINT:
-                std::cout << this->memory[dest];
+                std::cout << static_cast<char>(this->memory[dest]);
                 break;
 
             case InstOneReg::SCAN:

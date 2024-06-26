@@ -2,12 +2,9 @@
 #include "runner.hpp"
 #include "tokenizer.hpp"
 
-#include <algorithm>
 #include <filesystem>
-#include <format>
 #include <fstream>
 #include <iostream>
-#include <string_view>
 
 auto
 read_file(const char* path) -> std::string
@@ -38,7 +35,7 @@ main(int argc, char* argv[]) -> int
     auto tokenized = Tokenizer(contents).tokenize();
     auto parsed    = Parser(tokenized).parse();
     auto runner    = Runner(parsed);
-    runner.run_instruction();
+    runner.start();
 
     return 0;
 }
