@@ -3,7 +3,6 @@ a minimal virtual machine inspired by arm amd riscv.
 
 it's work in progress so please be patient. development might be slow.
 
-
 ## instructions
 each instruction can be one of these forms:
 | instruction | first register | second register |
@@ -13,8 +12,6 @@ each instruction can be one of these forms:
 | two register | `value` | `[memory cell]` |
 
 ### list of instructions
-> all the instructions must be lower case at the moment due to skill issues and C++.
-
 | instruction | description | example |
 | ----------- | ----------- | ------- |
 | `mov` | moving data to determined memory cell | `mov 12 , [256]` |
@@ -40,4 +37,4 @@ each instruction can be one of these forms:
 | `NegativeFlag` | if result of the last operation was negative, set to `1` |
 | `ZeroFlag` | if result of the last operation was zero, set to `1` |
 | `OverflowFlag` | if result of the last operation caused **signed overflow**, set to `1` |
-| `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `1` | 
+| `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `1` |

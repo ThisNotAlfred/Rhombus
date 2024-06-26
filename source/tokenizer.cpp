@@ -54,8 +54,12 @@ Tokenizer::tokenize_brackets() -> std::string
         ++this->current_header;
     }
 
-    // getting rid of ']'
     auto token = std::string { temp_token.begin(), temp_token.end() };
+
+    // mkaing the token lowercase
+    // TODO: find a more efficient way. this doesn't seem good!
+    std::transform(token.begin(), token.end(), token.begin(),
+                   [](auto chr) { return std::tolower(chr); });
 
     return token;
 }
