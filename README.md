@@ -24,6 +24,7 @@ each instruction can be one of these forms:
 | `and` | and-ing data to determined memory cell by value | `and 1 , [1]` |
 | `cmpre` | compareing data to determined memory cell for equality | `cmpre 23, [23]` |
 | `cmprs` | comparing data to detemined memory cell for **value** being smaller | `cmprs 23, [45]` |
+| `jmp` | unconditional jump | `jmp [0]` |
 | `jmpe` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 1` | `jmpe [132]` |
 | `jmpb` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 0` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
 | `jmps` | jumping to determined memory cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
