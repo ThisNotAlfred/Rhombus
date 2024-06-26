@@ -45,7 +45,7 @@ each instruction can be one of these forms:
 
 ## memory
 
-the machine has 128KB of fixed-size memory that you can access. your **appends** to this amount and doesn't take anything from it.
+the machine has 128KB of fixed-size memory that you can access. your program **appends** to this amount and doesn't take anything from it.
 
 # Example
 
