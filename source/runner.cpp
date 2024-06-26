@@ -11,8 +11,8 @@ Runner::start() -> void
     // resizing from 0 to 128KB (2^^16 * 8 / 1024 * 16)
     memory.resize(static_cast<std::size_t>(65536 * 8 / 1024));
 
-    for (const auto& instruction : this->instructions) {
-        this->run_instruction(instruction);
+    for (auto i = 0; this->instruction_pointer < instructions.size(); ++this->instruction_pointer) {
+        this->run_instruction(instructions[this->instruction_pointer]);
     }
 }
 
