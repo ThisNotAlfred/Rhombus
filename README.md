@@ -26,10 +26,10 @@ each instruction can be one of these forms:
 | `and` | and-ing data to determined memory cell by value | `and 1 , [1]` |
 | `cmpre` | compareing data to determined memory cell for equality | `cmpre 23, [23]` |
 | `cmprs` | comparing data to detemined memory cell for **value** being smaller | `cmprs 23, [45]` |
-| `jmp` | unconditional jump | `jmp [0]` |
-| `jmpe` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = true` | `jmpe [132]` |
-| `jmpb` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = false` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
-| `jmps` | jumping to determined memory cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
+| `jmp` | jumping to determined **program** cell unconditionally | `jmp [0]` |
+| `jmpe` | jumping to determined **program** cell if result of the last instruction was `ZeroFlag = true` | `jmpe [132]` |
+| `jmpb` | jumping to determined **program** cell if result of the last instruction was `ZeroFlag = false` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
+| `jmps` | jumping to determined **program** cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
 | `scan` | scan data from io to determined memory cell | `scan [122]` |
 | `print` | print data to io from determined memory cell | `print [112]` |
 | `nop` | no operation | `nop` |
@@ -42,3 +42,7 @@ each instruction can be one of these forms:
 | `ZeroFlag` | if result of the last operation was zero, set to `true` |
 | `OverflowFlag` | if result of the last operation caused **signed overflow**, set to `true` |
 | `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `true` |
+
+## memory
+
+the machine has 128KB of fixed-size memory that you can access. your **appends** to this amount and doesn't take anything from it.
