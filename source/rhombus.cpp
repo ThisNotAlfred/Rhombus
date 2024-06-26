@@ -38,7 +38,7 @@ main(int argc, char* argv[]) -> int
     auto tokenized = Tokenizer(contents).tokenize();
     auto parsed    = Parser(tokenized).parse();
     auto runner    = Runner(parsed);
-    runner.run();
+    runner.run_instruction();
 
     return 0;
 }

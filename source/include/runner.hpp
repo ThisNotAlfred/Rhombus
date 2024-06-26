@@ -12,10 +12,11 @@ class Runner
     Runner(std::vector<Instruction>& instructions) : instructions(instructions) {};
     ~Runner() = default;
 
-    auto run() -> void;
+    auto start() -> void;
+    auto run_instruction(const Instruction& instructio) -> void;
 
     auto check_for_flags(std::uint16_t source, std::uint16_t dest,
-                        const std::function<uint16_t(uint16_t, uint16_t)>& opr) -> void;
+                         const std::function<uint16_t(uint16_t, uint16_t)>& opr) -> void;
     auto set_negative() -> void;
     auto set_zero() -> void;
     auto set_overflow() -> void;
@@ -25,6 +26,7 @@ class Runner
     std::vector<Instruction>& instructions;
 
     std::vector<std::uint32_t> memory = {};
+    std::size_t instruction_pointer   = 0;
 
     bool negative_flag = false;
     bool zero_flag     = false;

@@ -2,120 +2,144 @@
 #include "instruction.hpp"
 
 #include <iostream>
-#include <tuple>
+#include <utility>
 #include <variant>
 
+
 auto
-Runner::run() -> void
+Runner::run_instruction(const Instruction& instruction) -> void
 {
-    for (const auto& instruction : this->instructions) {
-        if (std::holds_alternative<InstNoReg>(instruction)) {
-            switch (std::get<InstNoReg>(instruction).instruction) {
-                case InstNoReg::NOP:
-                    continue;
-            }
+    if (std::holds_alternative<InstNoReg>(instruction)) {
+        switch (std::get<InstNoReg>(instruction).instruction) {
+            case InstNoReg::NOP:
+                ++this->instruction_pointer;
         }
+    }
 
-        if (std::holds_alternative<InstOneReg>(instruction)) {
-            switch (std::get<InstOneReg>(instruction).instruction) {
-                case InstOneReg::JMP:
-                    break;
+    else if (std::holds_alternative<InstOneReg>(instruction)) {
+        auto dest = std::get<InstOneReg>(instruction).dest;
 
-                case InstOneReg::JMPE:
-                    break;
+        switch (std::get<InstOneReg>(instruction).instruction) {
+            case InstOneReg::JMP:
+                this->instruction_pointer = dest;
+                break;
 
-                case InstOneReg::JMPB:
-                    break;
+            case InstOneReg::JMPE:
+                if (this->zero_flag) {
+                    this->instruction_pointer = dest;
+                } else {
+                    ++this->instruction_pointer;
+                }
+                break;
 
-                case InstOneReg::JMPS:
-                    break;
+            case InstOneReg::JMPB:
+                if (this->zero_flag && this->negative_flag == this->overflow_flag) {
+                    this->instruction_pointer = dest;
+                } else {
+                    ++this->instruction_pointer;
+                }
+                break;
 
-                case InstOneReg::PRINT:
-                    break;
+            case InstOneReg::JMPS:
+                if (this->negative_flag != this->overflow_flag) {
+                    this->instruction_pointer = dest;
+                } else {
+                    ++this->instruction_pointer;
+                }
+                break;
 
-                case InstOneReg::SCAN:
-                    break;
-            }
+            case InstOneReg::PRINT:
+                std::cout << this->memory[dest];
+                break;
+
+            case InstOneReg::SCAN:
+                std::cin >> this->memory[dest];
+                break;
         }
+    }
 
-        if (std::holds_alternative<InstTwoReg>(instruction)) {
-            auto src  = std::get<InstTwoReg>(instruction).source;
-            auto dest = std::get<InstTwoReg>(instruction).dest;
+    else if (std::holds_alternative<InstTwoReg>(instruction)) {
+        auto src  = std::get<InstTwoReg>(instruction).source;
+        auto dest = std::get<InstTwoReg>(instruction).dest;
 
-            switch (std::get<InstTwoReg>(instruction).instruction) {
-                case InstTwoReg::MOV:
-                    this->memory[dest] = src;
-                    break;
+        switch (std::get<InstTwoReg>(instruction).instruction) {
+            case InstTwoReg::MOV:
+                this->memory[dest] = src;
+                break;
 
-                case InstTwoReg::SHR:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] >> src; });
+            case InstTwoReg::SHR:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] >> src;
+                });
+                this->memory[dest] >>= src;
+                ++this->instruction_pointer;
+                break;
 
-                    this->memory[dest] >>= src;
-                    break;
+            case InstTwoReg::SHL:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] << src;
+                });
+                this->memory[dest] <<= src;
+                ++this->instruction_pointer;
 
-                case InstTwoReg::SHL:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] << src; });
+                break;
 
-                    this->memory[dest] <<= src;
-                    break;
+            case InstTwoReg::ADD:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] + src;
+                });
+                this->memory[dest] += src;
+                ++this->instruction_pointer;
 
-                case InstTwoReg::ADD:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] + src; });
+                break;
 
-                    this->memory[dest] += src;
-                    break;
+            case InstTwoReg::SUB:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] - src;
+                });
+                this->memory[dest] -= src;
+                ++this->instruction_pointer;
+                break;
 
-                case InstTwoReg::SUB:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] - src; });
+            case InstTwoReg::XOR:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] ^ src;
+                });
+                this->memory[dest] ^= src;
+                ++this->instruction_pointer;
+                break;
 
-                    this->memory[dest] -= src;
-                    break;
+            case InstTwoReg::OR:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] | src;
+                });
+                this->memory[dest] |= src;
+                ++this->instruction_pointer;
+                break;
 
-                case InstTwoReg::XOR:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] ^ src; });
+            case InstTwoReg::AND:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] & src;
+                });
+                this->memory[dest] &= src;
+                ++this->instruction_pointer;
+                break;
 
-                    this->memory[dest] ^= src;
-                    break;
+            case InstTwoReg::CMPRS:
+                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
+                    return this->memory[dest] > src;
+                });
+                ++this->instruction_pointer;
+                break;
 
-                case InstTwoReg::OR:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] | src; });
-
-                    this->memory[dest] |= src;
-                    break;
-
-                case InstTwoReg::AND:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] & src; });
-
-                    this->memory[dest] &= src;
-                    break;
-
-                case InstTwoReg::CMPRS:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return this->memory[dest] > src; });
-                    break;
-
-                case InstTwoReg::CMPRE:
-                    this->check_for_flags(
-                        src, this->memory[dest],
-                        [this](uint16_t src, uint16_t dest) { return dest == src; });
-                    break;
-            }
+            case InstTwoReg::CMPRE:
+                this->check_for_flags(src, this->memory[dest],
+                                      [this](uint16_t src, uint16_t dest) { return dest == src; });
+                ++this->instruction_pointer;
+                break;
         }
+    } else {
+        std::unreachable();
     }
 }
 
