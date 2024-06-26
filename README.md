@@ -32,3 +32,12 @@ each instruction can be one of these forms:
 | `scan` | scan data from io to determined memory cell | `scan [122]` |
 | `print` | print data to io from determined memory cell | `print [112]` |
 | `nop` | no operation | `nop` |
+
+### list of flags 
+
+| flag | description |
+| ---- | ----------- |
+| `NegativeFlag` | if result of the last operation was negative, set to `1` |
+| `ZeroFlag` | if result of the last operation was zero, set to `1` |
+| `OverflowFlag` | if result of the last operation caused **signed overflow**, set to `1` |
+| `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `1` | 
