@@ -1,12 +1,6 @@
 #include "tokenizer.hpp"
 
 #include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <memory>
-#include <string>
-#include <string_view>
-#include <vector>
 
 auto
 Tokenizer::tokenize() -> std::vector<std::string>
@@ -56,11 +50,6 @@ Tokenizer::tokenize_brackets() -> std::string
 
     auto token = std::string { temp_token.begin(), temp_token.end() };
 
-    // mkaing the token lowercase
-    // TODO: find a more efficient way. this doesn't seem good!
-    std::transform(token.begin(), token.end(), token.begin(),
-                   [](auto chr) { return std::tolower(chr); });
-
     return token;
 }
 
@@ -83,6 +72,11 @@ Tokenizer::tokenize_instruction() -> std::string
     }
 
     auto token = std::string { temp_token.begin(), temp_token.end() };
+
+    // mkaing the token lowercase
+    // TODO: find a more efficient way. this doesn't seem good!
+    std::transform(token.begin(), token.end(), token.begin(),
+                   [](auto chr) { return std::tolower(chr); });
 
     return token;
 }
