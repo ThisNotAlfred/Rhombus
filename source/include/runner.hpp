@@ -14,11 +14,10 @@ class Runner
     auto run() -> void;
 
         private:
-    std::vector<Instruction> instructions;
+    std::vector<Instruction>& instructions;
 
     std::vector<std::uint32_t> memory = {};
 
-    // flags
     bool negative_flag = false;
     bool zero_flag     = false;
     bool overflow_flag = false;
