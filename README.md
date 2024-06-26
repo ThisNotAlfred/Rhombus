@@ -23,9 +23,9 @@ each instruction can be one of these forms:
 | `or` | or-ing data to determined memory cell by value | `or 18 , [5]` |
 | `and` | and-ing data to determined memory cell by value | `and 1 , [1]` |
 | `cmpr` | comparing data to determined memory cell | `cpmr 23 , [11]` |
-| `jmpe` | jumping to determined memory cell if result of the last `cmpr` was `ZeroFlag = 1` | `jmpe [132]` |
-| `jmpb` | jumping to determined memory cell if result of the last `cmpr` was `ZeroFlag = 0` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
-| `jmps` | jumping to determined memory cell if result of the last `cmpr` was `NegativeFlag != OverflowFlag` | `jmps [234]` |
+| `jmpe` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 1` | `jmpe [132]` |
+| `jmpb` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 0` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
+| `jmps` | jumping to determined memory cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
 | `scan` | scan data from io to determined memory cell | `scan [122]` |
 | `print` | print data to io from determined memory cell | `print [112]` |
 | `nop` | no operation | `nop` |
