@@ -13,7 +13,7 @@ each instruction can be one of these forms:
 | two register | `value` | `[memory cell]` |
 
 ### list of instructions
-> all the instructions must be lower case at the moment due to skkill issues and C++.
+> all the instructions must be lower case at the moment due to skill issues and C++.
 
 | instruction | description | example |
 | ----------- | ----------- | ------- |
