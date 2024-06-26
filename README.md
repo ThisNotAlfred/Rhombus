@@ -4,6 +4,7 @@ a minimal virtual machine inspired by arm amd riscv.
 it's work in progress so please be patient. development might be slow.
 
 ## instructions
+
 each instruction can be one of these forms:
 | instruction | first register | second register |
 | ----------- | -------------- | --------------- |
@@ -12,6 +13,7 @@ each instruction can be one of these forms:
 | two register | `value` | `[memory cell]` |
 
 ### list of instructions
+
 | instruction | description | example |
 | ----------- | ----------- | ------- |
 | `mov` | moving data to determined memory cell | `mov 12 , [256]` |
@@ -25,8 +27,8 @@ each instruction can be one of these forms:
 | `cmpre` | compareing data to determined memory cell for equality | `cmpre 23, [23]` |
 | `cmprs` | comparing data to detemined memory cell for **value** being smaller | `cmprs 23, [45]` |
 | `jmp` | unconditional jump | `jmp [0]` |
-| `jmpe` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 1` | `jmpe [132]` |
-| `jmpb` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = 0` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
+| `jmpe` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = true` | `jmpe [132]` |
+| `jmpb` | jumping to determined memory cell if result of the last instruction was `ZeroFlag = false` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
 | `jmps` | jumping to determined memory cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
 | `scan` | scan data from io to determined memory cell | `scan [122]` |
 | `print` | print data to io from determined memory cell | `print [112]` |
@@ -36,7 +38,7 @@ each instruction can be one of these forms:
 
 | flag | description |
 | ---- | ----------- |
-| `NegativeFlag` | if result of the last operation was negative, set to `1` |
-| `ZeroFlag` | if result of the last operation was zero, set to `1` |
-| `OverflowFlag` | if result of the last operation caused **signed overflow**, set to `1` |
-| `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `1` |
+| `NegativeFlag` | if result of the last operation was negative, set to `true` |
+| `ZeroFlag` | if result of the last operation was zero, set to `true` |
+| `OverflowFlag` | if result of the last operation caused **signed overflow**, set to `true` |
+| `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `true` |
