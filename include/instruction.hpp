@@ -58,7 +58,25 @@ struct InstTwoReg {
         CMPRS,
     } instruction;
 
-    std::uint16_t source;
+    std::uint16_t value;
+    Register dest;
+};
+
+struct ImmInstTwoReg {
+    enum {
+        MOV,
+        SHR,
+        SHL,
+        ADD,
+        SUB,
+        XOR,
+        OR,
+        AND,
+        CMPRE,
+        CMPRS,
+    } instruction;
+
+    std::uint16_t value;
     Register dest;
 };
 
