@@ -20,6 +20,7 @@ class Parser
 
     auto two_mem(std::size_t index) -> Instructions::Instruction;
     auto imm_two_reg(std::size_t index) -> Instructions::Instruction;
+    auto two_reg(std::size_t index) -> Instructions::Instruction;
 
         private:
     std::vector<std::string>& tokens;

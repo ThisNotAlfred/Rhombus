@@ -58,7 +58,7 @@ struct InstTwoReg {
         CMPRS,
     } instruction;
 
-    std::uint16_t value;
+    Register source;
     Register dest;
 };
 
@@ -94,9 +94,10 @@ struct MemInstTwoReg {
         CMPRS,
     } instruction;
 
-    std::uint16_t value;
+    Register source;
     MemoryCell dest;
 };
 
-using Instruction = std::variant<InstNoReg, InstOneReg, MemInstOneReg, InstTwoReg, MemInstTwoReg>;
+using Instruction =
+    std::variant<InstNoReg, InstOneReg, MemInstOneReg, InstTwoReg, ImmInstTwoReg, MemInstTwoReg>;
 } // namespace Instructions
