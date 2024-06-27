@@ -4,6 +4,7 @@
 #include <iostream>
 #include <print>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace
@@ -375,6 +376,7 @@ auto
 Parser::parse() -> std::vector<Instructions::Instruction>
 {
     std::vector<Instructions::Instruction> instructions = {};
+
     for (uint i = 0; i < this->tokens.size(); ++i) {
 
         if (this->tokens[i] == "mov_m" || this->tokens[i] == "shr_m" ||
@@ -385,35 +387,41 @@ Parser::parse() -> std::vector<Instructions::Instruction>
             i += 2;
         }
 
-        if (this->tokens[i] == "mov_i" || this->tokens[i] == "shr_i" ||
-            this->tokens[i] == "add_i" || this->tokens[i] == "sub_i" ||
-            this->tokens[i] == "xor_i" || this->tokens[i] == "or_i" || this->tokens[i] == "and_i" ||
-            this->tokens[i] == "cmpre_i" || this->tokens[i] == "cmprs_i") {
+        else if (this->tokens[i] == "mov_i" || this->tokens[i] == "shr_i" ||
+                 this->tokens[i] == "add_i" || this->tokens[i] == "sub_i" ||
+                 this->tokens[i] == "xor_i" || this->tokens[i] == "or_i" ||
+                 this->tokens[i] == "and_i" || this->tokens[i] == "cmpre_i" ||
+                 this->tokens[i] == "cmprs_i") {
             instructions.emplace_back(this->imm_two_reg(i));
             i += 2;
         }
 
-        if (this->tokens[i] == "mov" || this->tokens[i] == "shr" || this->tokens[i] == "add" ||
-            this->tokens[i] == "sub" || this->tokens[i] == "xor" || this->tokens[i] == "or" ||
-            this->tokens[i] == "and" || this->tokens[i] == "cmpre" || this->tokens[i] == "cmprs") {
+        else if (this->tokens[i] == "mov" || this->tokens[i] == "shr" || this->tokens[i] == "add" ||
+                 this->tokens[i] == "sub" || this->tokens[i] == "xor" || this->tokens[i] == "or" ||
+                 this->tokens[i] == "and" || this->tokens[i] == "cmpre" ||
+                 this->tokens[i] == "cmprs") {
             instructions.emplace_back(this->two_reg(i));
             i += 2;
         }
 
-        if (this->tokens[i] == "jmp" || this->tokens[i] == "jmpe" || this->tokens[i] == "jmpb" ||
-            this->tokens[i] == "jmps" || this->tokens[i] == "print_m" ||
-            this->tokens[i] == "scan_m") {
+        else if (this->tokens[i] == "jmp" || this->tokens[i] == "jmpe" ||
+                 this->tokens[i] == "jmpb" || this->tokens[i] == "jmps" ||
+                 this->tokens[i] == "print_m" || this->tokens[i] == "scan_m") {
             instructions.emplace_back(this->one_mem(i));
             i += 1;
         }
 
-        if (this->tokens[i] == "print" || this->tokens[i] == "scan") {
+        else if (this->tokens[i] == "print" || this->tokens[i] == "scan") {
             instructions.emplace_back(this->one_reg(i));
             i += 1;
         }
 
-        if (this->tokens[i] == "nop") {
+        else if (this->tokens[i] == "nop") {
             instructions.emplace_back(this->no_reg(i));
+        }
+
+        else {
+            std::unreachable();
         }
     }
 

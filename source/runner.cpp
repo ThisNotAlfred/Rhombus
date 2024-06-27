@@ -9,10 +9,13 @@
 auto
 Runner::start() -> void
 {
+    // 8 zeros
+    stack = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
     // resizing from 0 to 128KB (2^^16 * 8 / 1024 * 16)
     memory.resize(static_cast<std::size_t>(65536 * 8 / 1024));
 
-    for (; this->instruction_pointer < instructions.size(); ++this->instruction_pointer) {
+    for (; this->instruction_pointer < instructions.size();) {
         this->run_instruction(instructions[this->instruction_pointer]);
     }
 }
@@ -23,7 +26,7 @@ Runner::run_instruction(const Instructions::Instruction& instruction) -> void
     if (std::holds_alternative<Instructions::NoRegister>(instruction)) {
         switch (std::get<Instructions::NoRegister>(instruction).instruction) {
             case Instructions::NoRegister::NOP:
-                ++this->instruction_pointer;
+                this->instruction_pointer++;
         }
     }
 
@@ -52,7 +55,7 @@ Runner::run_instruction(const Instructions::Instruction& instruction) -> void
     }
 }
 
-inline auto
+auto
 Runner::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> void
 {
     switch (instruction.instruction) {
@@ -96,7 +99,7 @@ Runner::run_mem_one_register(const Instructions::MemOneRegister& instruction) ->
     }
 }
 
-inline auto
+auto
 Runner::run_one_register(const Instructions::OneRegister& instruction) -> void
 {
     switch (instruction.instruction) {
@@ -113,7 +116,7 @@ Runner::run_one_register(const Instructions::OneRegister& instruction) -> void
     }
 }
 
-inline auto
+auto
 Runner::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.source);
@@ -189,7 +192,7 @@ Runner::run_mem_two_register(const Instructions::MemTwoRegister& instruction) ->
     }
 }
 
-inline auto
+auto
 Runner::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.value);
@@ -264,7 +267,7 @@ Runner::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) ->
     }
 }
 
-inline auto
+auto
 Runner::run_two_register(const Instructions::TwoRegister& instruction) -> void
 {
     switch (instruction.instruction) {
