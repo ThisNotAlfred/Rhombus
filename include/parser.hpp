@@ -11,11 +11,15 @@ class Parser
     Parser(std::vector<std::string>& tokens) : tokens(tokens) {};
     ~Parser() = default;
 
-    auto parse() -> std::vector<Instruction>;
+    auto parse() -> std::vector<Instructions::Instruction>;
 
-    auto no_reg(std::size_t index) -> Instruction;
-    auto one_reg(std::size_t index) -> Instruction;
-    auto two_reg(std::size_t index) -> Instruction;
+    auto no_reg(std::size_t index) -> Instructions::Instruction;
+
+    auto one_mem(std::size_t index) -> Instructions::Instruction;
+    auto one_reg(std::size_t index) -> Instructions::Instruction;
+
+    auto two_mem(std::size_t index) -> Instructions::Instruction;
+    auto two_reg(std::size_t index) -> Instructions::Instruction;
 
         private:
     std::vector<std::string>& tokens;

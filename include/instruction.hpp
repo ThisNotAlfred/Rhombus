@@ -3,7 +3,10 @@
 #include <cstdint>
 #include <variant>
 
+namespace Instructions
+{
 enum Register {
+    i0,
     i1,
     i2,
     i3,
@@ -11,7 +14,6 @@ enum Register {
     i5,
     i6,
     i7,
-    i8,
 };
 
 using MemoryCell = std::size_t;
@@ -29,7 +31,7 @@ struct InstOneReg {
     Register dest;
 };
 
-struct ImmInstOneReg {
+struct MemInstOneReg {
     enum {
         JMP,
         JMPE,
@@ -60,7 +62,7 @@ struct InstTwoReg {
     Register dest;
 };
 
-struct ImmInstTwoReg {
+struct MemInstTwoReg {
     enum {
         MOV,
         SHR,
@@ -78,4 +80,5 @@ struct ImmInstTwoReg {
     MemoryCell dest;
 };
 
-using Instruction = std::variant<InstNoReg, InstOneReg, ImmInstOneReg, InstTwoReg, ImmInstTwoReg>;
+using Instruction = std::variant<InstNoReg, InstOneReg, MemInstOneReg, InstTwoReg, MemInstTwoReg>;
+} // namespace Instructions

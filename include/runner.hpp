@@ -9,12 +9,12 @@
 class Runner
 {
         public:
-    Runner(std::vector<Instruction>& instructions) : instructions(instructions) {};
+    Runner(std::vector<Instructions::Instruction>& instructions) : instructions(instructions) {};
     ~Runner() = default;
 
     auto start() -> void;
 
-    auto run_instruction(const Instruction& instruction) -> void;
+    auto run_instruction(const Instructions::Instruction& instruction) -> void;
 
     auto check_for_flags(std::uint16_t source, std::uint16_t dest,
                          const std::function<int32_t(uint16_t, uint16_t)>& opr) -> void;
@@ -24,7 +24,7 @@ class Runner
     auto set_carry() -> void;
 
         private:
-    std::vector<Instruction>& instructions;
+    std::vector<Instructions::Instruction>& instructions;
 
     std::vector<std::uint16_t> memory = {};
     std::size_t instruction_pointer   = 0;
