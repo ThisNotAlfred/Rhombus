@@ -85,11 +85,13 @@ Runner::run_mem_one_register(const Instructions::MemOneRegister& instruction) ->
             break;
 
         case Instructions::MemOneRegister::PRINT:
-            std::print("{}", static_cast<char>(this->memory[instruction.dest]));
+            std::cout << static_cast<char>(this->memory[instruction.dest]) << std::flush;
+            this->instruction_pointer++;
             break;
 
         case Instructions::MemOneRegister::SCAN:
             std::cin >> this->memory[instruction.dest];
+            this->instruction_pointer++;
             break;
     }
 }
@@ -99,7 +101,7 @@ Runner::run_one_register(const Instructions::OneRegister& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::OneRegister::PRINT:
-            std::print("{}", static_cast<char>(this->stack[instruction.dest]));
+            std::cout << static_cast<char>(this->stack[instruction.dest]) << std::flush;
             this->instruction_pointer++;
             break;
 

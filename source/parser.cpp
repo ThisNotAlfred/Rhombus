@@ -57,70 +57,70 @@ Parser::two_mem(std::size_t index) -> Instructions::Instruction
     if (tokens[index] == "mov_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::MOV,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "add_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::ADD,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "sub_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::SUB,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "xor_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::XOR,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "or_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::OR,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "and_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::AND,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "shr_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::SHR,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "shl_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::SHL,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "cmpre_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::CMPRE,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "cmprs_m") {
         return Instructions::Instruction {
             Instructions::MemTwoRegister {Instructions::MemTwoRegister::CMPRS,
-                                         get_register(tokens[index + 1]), mem}
+                                          get_register(tokens[index + 1]), mem}
         };
     }
 
@@ -136,70 +136,70 @@ Parser::imm_two_reg(std::size_t index) -> Instructions::Instruction
     if (tokens[index] == "mov_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::MOV, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "add_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::ADD, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "sub_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::SUB, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "xor_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::XOR, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "or_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::OR, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "and_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::AND, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "shr_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::SHR, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "shl_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::SHL, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "cmpre_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::CMPRE, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "cmprs_i") {
         return Instructions::Instruction {
             Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::CMPRS, value,
-                                         get_register(tokens[index + 2])}
+                                          get_register(tokens[index + 2])}
         };
     }
 
@@ -213,80 +213,80 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
     if (tokens[index] == "mov") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::MOV,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "add") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::ADD,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "sub") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::SUB,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "xor") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::XOR,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "or") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::OR,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "and") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::AND,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "shr") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::SHR,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "shl") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::SHL,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "cmpre") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::CMPRE,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "cmprs") {
         return Instructions::Instruction {
             Instructions::TwoRegister {Instructions::TwoRegister::CMPRS,
-                                      get_register(tokens[index + 1]),
-                                      get_register(tokens[index + 2])}
+                                       get_register(tokens[index + 1]),
+                                       get_register(tokens[index + 2])}
         };
     }
 
@@ -344,14 +344,15 @@ Parser::one_reg(std::size_t index) -> Instructions::Instruction
 {
     if (tokens[index] == "scan") {
         return Instructions::Instruction {
-            Instructions::OneRegister {Instructions::OneRegister::SCAN, get_register(tokens[index])}
+            Instructions::OneRegister {Instructions::OneRegister::SCAN,
+                                       get_register(tokens[index + 1])}
         };
     }
 
     if (tokens[index] == "print") {
         return Instructions::Instruction {
             Instructions::OneRegister {Instructions::OneRegister::PRINT,
-                                      get_register(tokens[index])}
+                                       get_register(tokens[index + 1])}
         };
     }
 
