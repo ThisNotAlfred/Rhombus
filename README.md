@@ -6,33 +6,72 @@ it's work in progress so please be patient. development might be slow.
 ## instructions
 
 each instruction can be one of these forms:
-| instruction | first register | second register |
+| instruction | first argument | second argument |
 | ----------- | -------------- | --------------- |
-| no register | - | - |
-| one register | `[memroy cell]` | - |
-| two register | `value` | `[memory cell]` |
+| no argument | - | - |
+| one argument memory mode | `[memroy cell]` | - |
+| one argument register mode | `register` | - |
+| two register mode | `source register` | `destination register` |
+| two register immediate mode | `value` | `register` |
+| two register memory mode | `register` | `[memory cell]` |
 
 ### list of instructions
 
-| instruction | description | example |
-| ----------- | ----------- | ------- |
-| `mov` | moving data to determined memory cell | `mov 12 , [256]` |
-| `add` | adding data to determined memory cell | `add 13 , [54]` |
-| `sub` | subtracting data from determined memory cell | `sub 14 , [124]` |
-| `shr` | shifting right data at determined memory cell by value | `shr 15 , [1]` |
-| `shl` | shifting left data at determined memory cell by value | `shl 16 , [45]` |
-| `xor` | xor-ing data at determined memory cell by value | `xor 17 , [34]` |
-| `or` | or-ing data to determined memory cell by value | `or 18 , [5]` |
-| `and` | and-ing data to determined memory cell by value | `and 1 , [1]` |
-| `cmpre` | compareing data to determined memory cell for equality | `cmpre 23, [23]` |
-| `cmprs` | comparing data to detemined memory cell for **value** being smaller | `cmprs 23, [45]` |
-| `jmp` | jumping to determined **program** cell unconditionally | `jmp [0]` |
-| `jmpe` | jumping to determined **program** cell if result of the last instruction was `ZeroFlag = true` | `jmpe [132]` |
-| `jmpb` | jumping to determined **program** cell if result of the last instruction was `ZeroFlag = false` and `NegativeFlag = OverflowFlag` | `jmpb [124]` |
-| `jmps` | jumping to determined **program** cell if result of the last instruction was `NegativeFlag != OverflowFlag` | `jmps [234]` |
-| `scan` | scan data from io to determined memory cell | `scan [122]` |
-| `print` | print data to io from determined memory cell | `print [112]` |
-| `nop` | no operation | `nop` |
+| instruction | mode | description |
+| ----------- | ---- | ----------- |
+
+| `mov` | two register | copying data from source to dest |
+| `mov_i` | two register immedaite | copying data from value to register |
+| `mov_m` | two reigster memory | copying data from register to memory cell |
+
+| `add` | two register | adding data to destination by source register |
+| `add_i` | two register immediate | adding value to register |
+| `add_m` | two register memory | adding register to determined memory cell |
+
+| `sub` | two register | subtracting source from destination |
+| `sub_i` | two register immediate | subtracting value from register |
+| `sub_m` | two register memory | subtracting register from memory cell |
+
+| `shr` | two register | shifting right destination by source |
+| `shr_i` | two register immediate | shifting right register by value |
+| `shr_m` | two register mempry | shfifiting right memory cell by register |
+
+| `shl` | two register | shifting left destination by source |
+| `shl_i` | two register immediate | shifting left register by value |
+| `shl_m` | two register mempry | shfifiting left memory cell by register |
+
+| `xor` | two register | xor-ing destination by source |
+| `xor_i` | two register immedaite | xor-ing register by value |
+| `xor_m` | two register memory | xor-ing memory cell by register |
+
+| `or` | two register | or-ing destination by source |
+| `or_i` | two register immedaite | or-ing register by value |
+| `or_m` | two register memory | or-ing memory cell by register |
+
+| `and` | two register | and-ing destination by source |
+| `and_i` | two register immedaite | and-ing register by value |
+| `and_m` | two register memory | and-ing memory cell by register |
+
+| `cmpre` | two register | compareing source to destination for equality |
+| `cmpre_i` | two register immediate | compareing register to value for equality |
+| `cmpre_m` | two register memory | compareing register to memory cell for equality |
+
+| `cmprs` | two register | compareing source to destination for source being smaller |
+| `cmprs_i` | two register immediate | compareing register to value for register being smaller |
+| `cmprs_m` | two register memory | compareing register to memory cell for register being smaller |
+
+| `jmp` | one register memory | jumping to determined **program** instruction unconditionally |
+| `jmpe` | one register memory | jumping to determined **program** instruction if result of the last instruction was `ZeroFlag = true` |
+| `jmpb` | one register memory | jumping to determined **program** instruction if result of the last instruction was `ZeroFlag = false` and `NegativeFlag = OverflowFlag` |
+| `jmps` | one register memory | jumping to determined **program** instruction if result of the last instruction was `NegativeFlag != OverflowFlag` |
+
+| `scan` | one register | scan data from io to register |
+| `scan_m` | one register memory | scan data from io to memory cell |
+
+| `print` | one register | print data to io from register |
+| `print_m` | one register memory | print data to io from memory cell |
+
+| `nop` | no operation |
 
 ### list of flags 
 
@@ -45,42 +84,31 @@ each instruction can be one of these forms:
 
 ## memory
 
-the machine has 128KB of fixed-size memory that you can access. your program **appends** to this amount and doesn't take anything from it.
+the machine has 128KB of fixed-size memory that you can access. your program is **separate** and doesn't take anything from it.
 
-# Example
+# Examples
 
 ## basic hello world
 
 ```asm
-mov 72 , [0]
-print [0]
+mov_i 72 , i0
+mov_i 69 , i1
+mov_i 76 , i2
+mov_i 79 , i3
+mov_i 32 , i4
+mov_i 87 , i5
+mov_i 82 , i6
+mov_i 68 , i7
 
-mov 69 , [1]
-print [1]
-
-mov 76 , [2]
-print [2]
-print [2]
-
-mov 79 , [3]
-print [3]
-
-mov 32 , [4]
-print [4]
-
-mov 87 , [5]
-print [5]
-
-print [3]
-
-mov 82 , [6]
-print 6
-
-print [2]
-
-mov 68 , [7]
-print [7]
-
-mov 33 , [8]
-print [8]
+print i0
+print i1
+print i2
+print i2
+print i3
+print i4
+print i5
+print i3
+print i6
+print i2
+print i7
 ```
