@@ -14,6 +14,14 @@ enum Register {
     i5,
     i6,
     i7,
+    i8,
+    i9,
+    i10,
+    i11,
+    i12,
+    i13,
+    i14,
+    i15,
 };
 
 using MemoryCell = std::size_t;

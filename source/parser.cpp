@@ -45,6 +45,38 @@ get_register(std::string_view reg)
         return Instructions::Register::i7;
     }
 
+    if (reg == "i8") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i9") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i10") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i11") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i12") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i13") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i14") {
+        return Instructions::Register::i7;
+    }
+
+    if (reg == "i15") {
+        return Instructions::Register::i7;
+    }
+
     std::print(stderr, "wrong register parameter\n");
     std::exit(EXIT_FAILURE);
 }

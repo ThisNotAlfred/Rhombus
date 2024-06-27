@@ -40,7 +40,7 @@ class Runner
     bool overflow_flag = false;
     bool carry_flag    = false;
 
-    std::array<std::uint16_t, 8> stack = {};
+    std::array<std::uint16_t, 16> stack = {};
     std::size_t stack_pointer          = 0;
     std::size_t stack_base             = 0;
 };
