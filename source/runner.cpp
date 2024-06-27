@@ -11,7 +11,7 @@ Runner::start() -> void
     // resizing from 0 to 128KB (2^^16 * 8 / 1024 * 16)
     memory.resize(static_cast<std::size_t>(65536 * 8 / 1024));
 
-    for (auto i = 0; this->instruction_pointer < instructions.size(); ++this->instruction_pointer) {
+    for (; this->instruction_pointer < instructions.size(); ++this->instruction_pointer) {
         this->run_instruction(instructions[this->instruction_pointer]);
     }
 }
@@ -144,7 +144,7 @@ Runner::run_instruction(const Instruction& instruction) -> void
 
             case InstTwoReg::CMPRE:
                 this->check_for_flags(src, this->memory[dest],
-                                      [this](uint16_t src, uint16_t dest) { return dest == src; });
+                                      [](uint16_t src, uint16_t dest) { return dest == src; });
                 ++this->instruction_pointer;
                 break;
         }
@@ -155,7 +155,7 @@ Runner::run_instruction(const Instruction& instruction) -> void
 
 inline auto
 Runner::check_for_flags(std::uint16_t source, std::uint16_t dest,
-                        const std::function<std::uint16_t(std::uint16_t, std::uint16_t)>& opr)
+                        const std::function<std::int32_t(std::uint16_t, std::uint16_t)>& opr)
     -> void
 {
     if (opr(source, dest) == 0) {

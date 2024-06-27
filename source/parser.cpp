@@ -137,7 +137,7 @@ auto
 Parser::parse() -> std::vector<Instruction>
 {
     std::vector<Instruction> instructions = {};
-    for (auto i = 0; i < this->tokens.size(); ++i) {
+    for (uint i = 0; i < this->tokens.size(); ++i) {
 
         if (this->tokens[i] == "mov" || this->tokens[i] == "shr" || this->tokens[i] == "add" ||
             this->tokens[i] == "sub" || this->tokens[i] == "xor" || this->tokens[i] == "or" ||
@@ -157,5 +157,5 @@ Parser::parse() -> std::vector<Instruction>
         }
     }
 
-    return std::move(instructions);
+    return instructions;
 }

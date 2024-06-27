@@ -20,6 +20,7 @@ struct InstOneReg {
 
     Register dest;
 };
+
 struct InstTwoReg {
     enum {
         MOV,
