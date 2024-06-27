@@ -2,23 +2,9 @@
 
 #include "instruction.hpp"
 
-#include <cstdint>
 #include <functional>
-#include <vector>
-
-namespace
-{
-struct Stack {
-    std::uint16_t i0 = 0;
-    std::uint16_t i1 = 0;
-    std::uint16_t i2 = 0;
-    std::uint16_t i3 = 0;
-    std::uint16_t i4 = 0;
-    std::uint16_t i5 = 0;
-    std::uint16_t i6 = 0;
-    std::uint16_t i7 = 0;
-};
-} // namespace
+#include <typeinfo>
+#include <vector> // namespace
 
 class Runner
 {
@@ -30,12 +16,18 @@ class Runner
 
     auto run_instruction(const Instructions::Instruction& instruction) -> void;
 
-    auto check_for_flags(std::uint16_t source, std::uint16_t dest,
-                         const std::function<int32_t(uint16_t, uint16_t)>& opr) -> void;
-    auto set_negative() -> void;
-    auto set_zero() -> void;
-    auto set_overflow() -> void;
-    auto set_carry() -> void;
+    inline auto run_mem_one_register(const Instructions::MemOneRegister& instruction) -> void;
+    inline auto run_one_register(const Instructions::OneRegister& instruction) -> void;
+    inline auto run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> void;
+    inline auto run_imm_two_register(const Instructions::ImmTwoRegister& instruction) -> void;
+    inline auto run_two_register(const Instructions::TwoRegister& instruction) -> void;
+
+    inline auto check_for_flags(std::uint16_t source, std::uint16_t dest,
+                                const std::function<int32_t(uint16_t, uint16_t)>& opr) -> void;
+    inline auto set_negative() -> void;
+    inline auto set_zero() -> void;
+    inline auto set_overflow() -> void;
+    inline auto set_carry() -> void;
 
         private:
     std::vector<Instructions::Instruction>& instructions;
@@ -48,5 +40,7 @@ class Runner
     bool overflow_flag = false;
     bool carry_flag    = false;
 
-    Stack stack = {};
+    std::array<std::uint16_t, 8> stack = {};
+    std::size_t stack_pointer          = 0;
+    std::size_t stack_base             = 0;
 };
