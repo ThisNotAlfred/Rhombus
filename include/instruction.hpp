@@ -1,14 +1,35 @@
 #pragma once
 
+#include <cstdint>
 #include <variant>
 
-using Register = std::size_t;
+enum Register {
+    i1,
+    i2,
+    i3,
+    i4,
+    i5,
+    i6,
+    i7,
+    i8,
+};
+
+using MemoryCell = std::size_t;
 
 struct InstNoReg {
     enum { NOP } instruction;
 };
 
 struct InstOneReg {
+    enum {
+        PRINT,
+        SCAN,
+    } instruction;
+
+    Register dest;
+};
+
+struct ImmInstOneReg {
     enum {
         JMP,
         JMPE,
@@ -18,7 +39,7 @@ struct InstOneReg {
         SCAN,
     } instruction;
 
-    Register dest;
+    MemoryCell dest;
 };
 
 struct InstTwoReg {
@@ -35,8 +56,26 @@ struct InstTwoReg {
         CMPRS,
     } instruction;
 
-    Register source;
+    std::uint16_t source;
     Register dest;
 };
 
-using Instruction = std::variant<InstNoReg, InstOneReg, InstTwoReg>;
+struct ImmInstTwoReg {
+    enum {
+        MOV,
+        SHR,
+        SHL,
+        ADD,
+        SUB,
+        XOR,
+        OR,
+        AND,
+        CMPRE,
+        CMPRS,
+    } instruction;
+
+    std::uint16_t value;
+    MemoryCell dest;
+};
+
+using Instruction = std::variant<InstNoReg, InstOneReg, ImmInstOneReg, InstTwoReg, ImmInstTwoReg>;
