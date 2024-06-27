@@ -18,11 +18,11 @@ enum Register {
 
 using MemoryCell = std::size_t;
 
-struct InstNoReg {
+struct NoRegister {
     enum { NOP } instruction;
 };
 
-struct InstOneReg {
+struct OneRegister {
     enum {
         PRINT,
         SCAN,
@@ -31,7 +31,7 @@ struct InstOneReg {
     Register dest;
 };
 
-struct MemInstOneReg {
+struct MemOneRegister {
     enum {
         JMP,
         JMPE,
@@ -44,7 +44,7 @@ struct MemInstOneReg {
     MemoryCell dest;
 };
 
-struct InstTwoReg {
+struct TwoRegister {
     enum {
         MOV,
         SHR,
@@ -62,7 +62,7 @@ struct InstTwoReg {
     Register dest;
 };
 
-struct ImmInstTwoReg {
+struct ImmTwoRegister {
     enum {
         MOV,
         SHR,
@@ -80,7 +80,7 @@ struct ImmInstTwoReg {
     Register dest;
 };
 
-struct MemInstTwoReg {
+struct MemTwoRegister {
     enum {
         MOV,
         SHR,
@@ -98,6 +98,6 @@ struct MemInstTwoReg {
     MemoryCell dest;
 };
 
-using Instruction =
-    std::variant<InstNoReg, InstOneReg, MemInstOneReg, InstTwoReg, ImmInstTwoReg, MemInstTwoReg>;
+using Instruction = std::variant<NoRegister, OneRegister, MemOneRegister, TwoRegister,
+                                 ImmTwoRegister, MemTwoRegister>;
 } // namespace Instructions

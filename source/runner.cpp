@@ -2,6 +2,7 @@
 #include "instruction.hpp"
 
 #include <iostream>
+#include <print>
 #include <utility>
 #include <variant>
 
@@ -19,22 +20,20 @@ Runner::start() -> void
 auto
 Runner::run_instruction(const Instructions::Instruction& instruction) -> void
 {
-    if (std::holds_alternative<Instructions::InstNoReg>(instruction)) {
-        switch (std::get<Instructions::InstNoReg>(instruction).instruction) {
-            case Instructions::InstNoReg::NOP:
+    if (std::holds_alternative<Instructions::NoRegister>(instruction)) {
+        switch (std::get<Instructions::NoRegister>(instruction).instruction) {
+            case Instructions::NoRegister::NOP:
                 ++this->instruction_pointer;
         }
-    }
+    } else if (std::holds_alternative<Instructions::MemOneRegister>(instruction)) {
+        auto dest = std::get<Instructions::MemOneRegister>(instruction).dest;
 
-    else if (std::holds_alternative<Instructions::MemInstOneReg>(instruction)) {
-        auto dest = std::get<Instructions::MemInstOneReg>(instruction).dest;
-
-        switch (std::get<Instructions::MemInstOneReg>(instruction).instruction) {
-            case Instructions::MemInstOneReg::JMP:
+        switch (std::get<Instructions::MemOneRegister>(instruction).instruction) {
+            case Instructions::MemOneRegister::JMP:
                 this->instruction_pointer = dest;
                 break;
 
-            case Instructions::MemInstOneReg::JMPE:
+            case Instructions::MemOneRegister::JMPE:
                 if (this->zero_flag) {
                     this->instruction_pointer = dest;
                 } else {
@@ -42,7 +41,7 @@ Runner::run_instruction(const Instructions::Instruction& instruction) -> void
                 }
                 break;
 
-            case Instructions::MemInstOneReg::JMPB:
+            case Instructions::MemOneRegister::JMPB:
                 if (this->zero_flag && this->negative_flag == this->overflow_flag) {
                     this->instruction_pointer = dest;
                 } else {
@@ -50,7 +49,7 @@ Runner::run_instruction(const Instructions::Instruction& instruction) -> void
                 }
                 break;
 
-            case Instructions::MemInstOneReg::JMPS:
+            case Instructions::MemOneRegister::JMPS:
                 if (this->negative_flag != this->overflow_flag) {
                     this->instruction_pointer = dest;
                 } else {
@@ -58,96 +57,52 @@ Runner::run_instruction(const Instructions::Instruction& instruction) -> void
                 }
                 break;
 
-            case Instructions::MemInstOneReg::PRINT:
-                std::cout << static_cast<char>(this->memory[dest]);
+            case Instructions::MemOneRegister::PRINT:
+                std::print("{}", static_cast<char>(this->memory[dest]));
                 break;
 
-            case Instructions::MemInstOneReg::SCAN:
+            case Instructions::MemOneRegister::SCAN:
                 std::cin >> this->memory[dest];
                 break;
         }
-    }
+    } else if (std::holds_alternative<Instructions::MemTwoRegister>(instruction)) {
+        auto source = std::get<Instructions::MemTwoRegister>(instruction).source;
+        auto dest   = std::get<Instructions::MemTwoRegister>(instruction).dest;
 
-    else if (std::holds_alternative<Instructions::MemInstTwoReg>(instruction)) {
-        auto src  = std::get<Instructions::MemInstTwoReg>(instruction).value;
-        auto dest = std::get<Instructions::MemInstTwoReg>(instruction).dest;
-
-        switch (std::get<Instructions::MemInstTwoReg>(instruction).instruction) {
-            case Instructions::MemInstTwoReg::MOV:
-                this->memory[dest] = src;
+        switch (std::get<Instructions::MemTwoRegister>(instruction).instruction) {
+            case Instructions::MemTwoRegister::MOV:
                 break;
 
-            case Instructions::MemInstTwoReg::SHR:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] >> src;
-                });
-                this->memory[dest] >>= src;
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::SHR:
                 break;
 
-            case Instructions::MemInstTwoReg::SHL:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] << src;
-                });
-                this->memory[dest] <<= src;
-                ++this->instruction_pointer;
-
+            case Instructions::MemTwoRegister::SHL:
                 break;
 
-            case Instructions::MemInstTwoReg::ADD:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] + src;
-                });
-                this->memory[dest] += src;
-                ++this->instruction_pointer;
-
+            case Instructions::MemTwoRegister::ADD:
                 break;
 
-            case Instructions::MemInstTwoReg::SUB:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] - src;
-                });
-                this->memory[dest] -= src;
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::SUB:
                 break;
 
-            case Instructions::MemInstTwoReg::XOR:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] ^ src;
-                });
-                this->memory[dest] ^= src;
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::XOR:
                 break;
 
-            case Instructions::MemInstTwoReg::OR:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] | src;
-                });
-                this->memory[dest] |= src;
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::OR:
                 break;
 
-            case Instructions::MemInstTwoReg::AND:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] & src;
-                });
-                this->memory[dest] &= src;
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::AND:
                 break;
 
-            case Instructions::MemInstTwoReg::CMPRS:
-                this->check_for_flags(src, this->memory[dest], [this](uint16_t src, uint16_t dest) {
-                    return this->memory[dest] > src;
-                });
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::CMPRS:
                 break;
 
-            case Instructions::MemInstTwoReg::CMPRE:
-                this->check_for_flags(src, this->memory[dest],
-                                      [](uint16_t src, uint16_t dest) { return dest == src; });
-                ++this->instruction_pointer;
+            case Instructions::MemTwoRegister::CMPRE:
+
                 break;
         }
+    } else if (std::holds_alternative<Instructions::ImmTwoRegister>(instruction)) {
+    } else if (std::holds_alternative<Instructions::TwoRegister>(instruction)) {
     } else {
         std::unreachable();
     }

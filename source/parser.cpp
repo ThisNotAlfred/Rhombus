@@ -56,70 +56,70 @@ Parser::two_mem(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "mov_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::MOV,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::MOV,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "add_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::ADD,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::ADD,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "sub_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::SUB,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::SUB,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "xor_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::XOR,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::XOR,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "or_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::OR,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::OR,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "and_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::AND,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::AND,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "shr_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::SHR,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::SHR,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "shl_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::SHL,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::SHL,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "cmpre_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::CMPRE,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::CMPRE,
                                          get_register(tokens[index + 1]), mem}
         };
     }
 
     if (tokens[index] == "cmprs_m") {
         return Instructions::Instruction {
-            Instructions::MemInstTwoReg {Instructions::MemInstTwoReg::CMPRS,
+            Instructions::MemTwoRegister {Instructions::MemTwoRegister::CMPRS,
                                          get_register(tokens[index + 1]), mem}
         };
     }
@@ -135,70 +135,70 @@ Parser::imm_two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "mov_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::MOV, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::MOV, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "add_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::ADD, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::ADD, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "sub_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::SUB, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::SUB, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "xor_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::XOR, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::XOR, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "or_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::OR, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::OR, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "and_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::AND, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::AND, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "shr_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::SHR, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::SHR, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "shl_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::SHL, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::SHL, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "cmpre_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::CMPRE, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::CMPRE, value,
                                          get_register(tokens[index + 2])}
         };
     }
 
     if (tokens[index] == "cmprs_i") {
         return Instructions::Instruction {
-            Instructions::ImmInstTwoReg {Instructions::ImmInstTwoReg::CMPRS, value,
+            Instructions::ImmTwoRegister {Instructions::ImmTwoRegister::CMPRS, value,
                                          get_register(tokens[index + 2])}
         };
     }
@@ -212,7 +212,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 {
     if (tokens[index] == "mov") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::MOV,
+            Instructions::TwoRegister {Instructions::TwoRegister::MOV,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -220,7 +220,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "add") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::ADD,
+            Instructions::TwoRegister {Instructions::TwoRegister::ADD,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -228,7 +228,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "sub") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::SUB,
+            Instructions::TwoRegister {Instructions::TwoRegister::SUB,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -236,7 +236,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "xor") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::XOR,
+            Instructions::TwoRegister {Instructions::TwoRegister::XOR,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -244,7 +244,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "or") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::OR,
+            Instructions::TwoRegister {Instructions::TwoRegister::OR,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -252,7 +252,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "and") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::AND,
+            Instructions::TwoRegister {Instructions::TwoRegister::AND,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -260,7 +260,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "shr") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::SHR,
+            Instructions::TwoRegister {Instructions::TwoRegister::SHR,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -268,7 +268,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "shl") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::SHL,
+            Instructions::TwoRegister {Instructions::TwoRegister::SHL,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -276,7 +276,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "cmpre") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::CMPRE,
+            Instructions::TwoRegister {Instructions::TwoRegister::CMPRE,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -284,7 +284,7 @@ Parser::two_reg(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "cmprs") {
         return Instructions::Instruction {
-            Instructions::InstTwoReg {Instructions::InstTwoReg::CMPRS,
+            Instructions::TwoRegister {Instructions::TwoRegister::CMPRS,
                                       get_register(tokens[index + 1]),
                                       get_register(tokens[index + 2])}
         };
@@ -301,37 +301,37 @@ Parser::one_mem(std::size_t index) -> Instructions::Instruction
 
     if (tokens[index] == "jmp") {
         return Instructions::Instruction {
-            Instructions::MemInstOneReg {Instructions::MemInstOneReg::JMP, first_mem}
+            Instructions::MemOneRegister {Instructions::MemOneRegister::JMP, first_mem}
         };
     }
 
     if (tokens[index] == "jmpe") {
         return Instructions::Instruction {
-            Instructions::MemInstOneReg {Instructions::MemInstOneReg::JMPE, first_mem}
+            Instructions::MemOneRegister {Instructions::MemOneRegister::JMPE, first_mem}
         };
     }
 
     if (tokens[index] == "jmps") {
         return Instructions::Instruction {
-            Instructions::MemInstOneReg {Instructions::MemInstOneReg::JMPS, first_mem}
+            Instructions::MemOneRegister {Instructions::MemOneRegister::JMPS, first_mem}
         };
     }
 
     if (tokens[index] == "jmpb") {
         return Instructions::Instruction {
-            Instructions::MemInstOneReg {Instructions::MemInstOneReg::JMPB, first_mem}
+            Instructions::MemOneRegister {Instructions::MemOneRegister::JMPB, first_mem}
         };
     }
 
     if (tokens[index] == "scan_m") {
         return Instructions::Instruction {
-            Instructions::MemInstOneReg {Instructions::MemInstOneReg::SCAN, first_mem}
+            Instructions::MemOneRegister {Instructions::MemOneRegister::SCAN, first_mem}
         };
     }
 
     if (tokens[index] == "print_m") {
         return Instructions::Instruction {
-            Instructions::MemInstOneReg {Instructions::MemInstOneReg::PRINT, first_mem}
+            Instructions::MemOneRegister {Instructions::MemOneRegister::PRINT, first_mem}
         };
     }
 
@@ -344,13 +344,13 @@ Parser::one_reg(std::size_t index) -> Instructions::Instruction
 {
     if (tokens[index] == "scan") {
         return Instructions::Instruction {
-            Instructions::InstOneReg {Instructions::InstOneReg::SCAN, get_register(tokens[index])}
+            Instructions::OneRegister {Instructions::OneRegister::SCAN, get_register(tokens[index])}
         };
     }
 
     if (tokens[index] == "print") {
         return Instructions::Instruction {
-            Instructions::InstOneReg {Instructions::InstOneReg::PRINT,
+            Instructions::OneRegister {Instructions::OneRegister::PRINT,
                                       get_register(tokens[index])}
         };
     }
@@ -363,7 +363,7 @@ auto
 Parser::no_reg(std::size_t index) -> Instructions::Instruction
 {
     if (tokens[index] == "nop") {
-        return Instructions::Instruction { Instructions::InstNoReg {} };
+        return Instructions::Instruction { Instructions::NoRegister {} };
     }
 
     std::print(stderr, "error in parsing at character {}. go figure rest of it. bye!\n", index);

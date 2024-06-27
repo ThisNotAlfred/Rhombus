@@ -6,6 +6,20 @@
 #include <functional>
 #include <vector>
 
+namespace
+{
+struct Stack {
+    std::uint16_t i0 = 0;
+    std::uint16_t i1 = 0;
+    std::uint16_t i2 = 0;
+    std::uint16_t i3 = 0;
+    std::uint16_t i4 = 0;
+    std::uint16_t i5 = 0;
+    std::uint16_t i6 = 0;
+    std::uint16_t i7 = 0;
+};
+} // namespace
+
 class Runner
 {
         public:
@@ -33,4 +47,6 @@ class Runner
     bool zero_flag     = false;
     bool overflow_flag = false;
     bool carry_flag    = false;
+
+    Stack stack = {};
 };
