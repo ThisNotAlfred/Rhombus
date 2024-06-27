@@ -200,66 +200,64 @@ Runner::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) ->
             break;
 
         case Instructions::ImmTwoRegister::SHR:
-            this->check_for_flags(
-                value, this->memory[instruction.dest],
-                [this](uint16_t src, uint16_t dest) { return this->memory[dest] >> src; });
-            this->memory[instruction.dest] >>= value;
-            ++instruction_pointer;
+            this->check_for_flags(value, this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest >> src; });
+            this->stack[instruction.dest] >>= value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::SHL:
-            this->check_for_flags(
-                value, this->memory[instruction.dest],
-                [this](uint16_t src, uint16_t dest) { return this->memory[dest] << src; });
-            this->memory[instruction.dest] <<= value;
-            ++instruction_pointer;
+            this->check_for_flags(value, this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest << src; });
+            this->stack[instruction.dest] <<= value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::ADD:
-            this->check_for_flags(value, this->memory[instruction.dest],
+            this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest + src; });
-            this->memory[instruction.dest] += value;
-            ++instruction_pointer;
+            this->stack[instruction.dest] += value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::SUB:
-            this->check_for_flags(value, this->memory[instruction.dest],
+            this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest - src; });
-            this->memory[instruction.dest] -= value;
-            ++instruction_pointer;
+            this->stack[instruction.dest] -= value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::XOR:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest ^ src; });
-            this->memory[instruction.dest] ^= value;
-            ++instruction_pointer;
+            this->stack[instruction.dest] ^= value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::OR:
-            this->check_for_flags(value, this->memory[instruction.dest],
+            this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest | src; });
-            this->memory[instruction.dest] |= value;
-            ++instruction_pointer;
+            this->stack[instruction.dest] |= value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::AND:
-            this->check_for_flags(value, this->memory[instruction.dest],
+            this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest & src; });
-            this->memory[instruction.dest] &= value;
-            ++instruction_pointer;
+            this->stack[instruction.dest] &= value;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::CMPRE:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest == src; });
-            ++instruction_pointer;
+            instruction_pointer++;
             break;
 
         case Instructions::ImmTwoRegister::CMPRS:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest > src; });
-            ++instruction_pointer;
+            instruction_pointer++;
             break;
     }
 }
@@ -267,6 +265,74 @@ Runner::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) ->
 inline auto
 Runner::run_two_register(const Instructions::TwoRegister& instruction) -> void
 {
+    switch (instruction.instruction) {
+        case Instructions::ImmTwoRegister::MOV:
+            this->stack[instruction.dest] = this->stack[instruction.source];
+            instruction_pointer++;
+            stack_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::SHR:
+            this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest >> src; });
+            this->stack[instruction.dest] >>= this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::SHL:
+            this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest << src; });
+            this->stack[instruction.dest] <<= this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::ADD:
+            this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest + src; });
+            this->stack[instruction.dest] += this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::SUB:
+            this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest - src; });
+            this->stack[instruction.dest] -= this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::XOR:
+            this->check_for_flags(this->stack[instruction.source], this->memory[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest ^ src; });
+            this->stack[instruction.dest] ^= this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::OR:
+            this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest | src; });
+            this->stack[instruction.dest] |= this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::AND:
+            this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest & src; });
+            this->stack[instruction.dest] &= this->stack[instruction.source];
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::CMPRE:
+            this->check_for_flags(this->stack[instruction.source], this->memory[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest == src; });
+            instruction_pointer++;
+            break;
+
+        case Instructions::ImmTwoRegister::CMPRS:
+            this->check_for_flags(this->stack[instruction.source], this->memory[instruction.dest],
+                                  [](uint16_t src, uint16_t dest) { return dest > src; });
+            instruction_pointer++;
+            break;
+    }
 }
 
 inline auto
