@@ -9,7 +9,6 @@
 auto
 read_file(const char* path) -> std::string
 {
-    auto file_size = std::filesystem::file_size(path);
     std::ifstream file(path, std::ios::in | std::ios::binary);
 
     std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());

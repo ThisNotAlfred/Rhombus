@@ -15,7 +15,7 @@ sources = [
 ]
 
 includes = [
-    'include/instructions.hpp',
+    'include/instruction.hpp',
     'include/parser.hpp',
     'include/runner.hpp',
     'include/tokenizer.hpp',
