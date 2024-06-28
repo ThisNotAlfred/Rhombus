@@ -78,30 +78,11 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 
 # Examples
 
-## basic hello world
-
-> don't program like this for Rhombus!
-
+## basic repeater
 ```asm
-; HELLO WORLD
-mov $72, i9
-mov $69, i10
-mov $76, i11
-mov $79, i12
-mov $32, i13
-mov $87, i14
-mov $82, i15
-mov $68, i8
-
-print i9
-print i10
-print i11
-print i11
-print i12
-print i13
-print i14
-print i12
-print i15
-print i11
-print i8
+; examples/repeater.rhom
+@BEGINNING
+    scan i9
+    print i9
+    jmp @BEGINNING
 ```
