@@ -18,8 +18,8 @@ it's work in progress so please be patient. development might be slow.
 | instruction | description |
 | ----------- | ----------- |
 | `mov` | copies data from source to destination |
-| `cmpre` | compares source to destination. checks for equality |
-| `cmprs` | compares source to destination. checks for source being smaller |
+| `cmpe` | compares source to destination. checks for equality |
+| `cmps` | compares source to destination. checks for source being smaller |
 | `jmp` | jumps to **program** instruction |
 | `jmpe` | jumps to **program** instruction if result of the last instruction was `zero = true` |
 | `jmpb` | jumps to **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
