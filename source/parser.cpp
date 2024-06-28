@@ -113,95 +113,85 @@ Parser::parse() -> std::vector<Instructions::Instruction>
 {
     std::vector<Instructions::Instruction> instructions = {};
 
-    for (uint i = 0; i < this->tokens.size();) {
-
+    for (std::size_t i = 0; i < this->tokens.size();) {
         if (this->tokens[i] == "mov") {
-            this->parse_mov(i);
+            instructions.emplace_back(this->parse_mov(i));
             i += 3;
         }
 
         else if (this->tokens[i] == "add") {
-            this->parse_add(i);
+            instructions.emplace_back(this->parse_add(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "sub") {
-            this->parse_sub(i);
+            instructions.emplace_back(this->parse_sub(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "shr") {
-            this->parse_shr(i);
+            instructions.emplace_back(this->parse_shr(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "shl") {
-            this->parse_shl(i);
+            instructions.emplace_back(this->parse_shl(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "xor") {
-            this->parse_xor(i);
+            instructions.emplace_back(this->parse_xor(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "or") {
-            this->parse_or(i);
+            instructions.emplace_back(this->parse_or(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "and") {
-            this->parse_and(i);
+            instructions.emplace_back(this->parse_and(i));
             i += 3;
-
         }
 
         else if (this->tokens[i] == "cmpe") {
-            this->parse_cmpe(i);
+            instructions.emplace_back(this->parse_cmpe(i));
             i += 3;
         }
 
         else if (this->tokens[i] == "cmps") {
-            this->parse_cmps(i);
+            instructions.emplace_back(this->parse_cmps(i));
             i += 3;
         }
 
         else if (this->tokens[i] == "jmp") {
-            this->parse_jmp(i);
+            instructions.emplace_back(this->parse_jmp(i));
             i += 2;
         }
 
         else if (this->tokens[i] == "jmpe") {
-            this->parse_jmpe(i);
+            instructions.emplace_back(this->parse_jmpe(i));
             i += 2;
 
         }
 
         else if (this->tokens[i] == "jmpb") {
-            this->parse_jmpb(i);
+            instructions.emplace_back(this->parse_jmpb(i));
             i += 2;
-
         }
 
         else if (this->tokens[i] == "jmps") {
-            this->parse_jmps(i);
+            instructions.emplace_back(this->parse_jmps(i));
             i += 2;
-
         }
 
         else if (this->tokens[i] == "print") {
-            this->parse_print(i);
+            instructions.emplace_back(this->parse_print(i));
             i += 2;
         }
 
         else if (this->tokens[i] == "scan") {
-            this->parse_scan(i);
+            instructions.emplace_back(this->parse_scan(i));
             i += 2;
         }
 
