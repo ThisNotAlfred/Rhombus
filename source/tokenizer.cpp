@@ -22,6 +22,11 @@ Tokenizer::tokenize() -> std::vector<std::string>
             continue;
         }
 
+        if (this->content[this->current_header] == '"') {
+            tokens.push_back(this->tokenize_string());
+            continue;
+        }
+
         if (this->content[this->current_header] == '[') {
             tokens.push_back(this->tokenize_brackets());
             continue;
@@ -75,6 +80,26 @@ Tokenizer::tokenize_instruction() -> std::string
 
     std::transform(token.begin(), token.end(), token.begin(),
                    [](auto chr) { return std::tolower(chr); });
+
+    return token;
+}
+
+auto
+Tokenizer::tokenize_string() -> std::string
+{
+    std::vector<char> temp_token = {};
+
+    // skipping first '"'
+    this->current_header++;
+
+    while (this->current_header < this->content.size() &&
+           this->content[this->current_header] != '\n' &&
+           this->content[this->current_header] != '"') {
+        temp_token.push_back(this->content[this->current_header]);
+        this->current_header++;
+    }
+
+    auto token = std::string { temp_token.begin(), temp_token.end() };
 
     return token;
 }
