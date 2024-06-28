@@ -91,15 +91,10 @@ parse_value(std::string& token)
 inline auto
 parse_brackets(std::string& token)
 {
-    std::uint16_t value = 0;
     token.erase(token.begin());
     token.erase(token.end());
 
-    for (auto chr : token) {
-        value += chr - '0';
-    }
-
-    return value;
+    return static_cast<std::uint16_t>(std::stoi(token));
 }
 }; // namespace
 
