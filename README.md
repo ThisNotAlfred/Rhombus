@@ -104,7 +104,6 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 
 ## registers
 
-you have access to 8 of 16bit integer registers. you can access them through i0 to i15.
 > purposes are just conventions and are not enforces.
 
 | register | purpose |
