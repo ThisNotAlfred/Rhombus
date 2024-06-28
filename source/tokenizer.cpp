@@ -11,8 +11,8 @@ Tokenizer::tokenize() -> std::vector<std::string>
         if (this->content[this->current_header] == ' ' ||
             this->content[this->current_header] == '\n' ||
             this->content[this->current_header] == '\r' ||
-            this->content[this->current_header] == '\t' || 
-            this->content[this->current_header] == ',' ) {
+            this->content[this->current_header] == '\t' ||
+            this->content[this->current_header] == ',') {
             this->current_header++;
             continue;
         }
@@ -43,10 +43,10 @@ Tokenizer::tokenize_brackets() -> std::string
     std::vector<char> temp_token = {};
 
     while (
+        this->current_header < this->content.size() &&
         this->content[this->current_header] != '\n' && this->content[this->current_header] != ' ' &&
-        this->content[this->current_header] != ',' && this->content[this->current_header] != '\r' &&
-        this->content[this->current_header] != '$' && this->content[this->current_header] != ';' &&
-        this->current_header < this->content.size()) {
+        this->content[this->current_header] != ',' && this->content[this->current_header] != '$' &&
+        this->content[this->current_header] != ';') {
         temp_token.push_back(this->content[current_header]);
         this->current_header++;
     }
@@ -63,10 +63,10 @@ Tokenizer::tokenize_instruction() -> std::string
     std::vector<char> temp_token = {};
 
     while (
+        this->current_header < this->content.size() &&
         this->content[this->current_header] != '\n' && this->content[this->current_header] != ' ' &&
         this->content[this->current_header] != ',' && this->content[this->current_header] != '[' &&
-        this->content[this->current_header] != ']' && this->content[this->current_header] != '\r' &&
-        this->content[this->current_header] != ';' && this->current_header < this->content.size()) {
+        this->content[this->current_header] != ']' && this->content[this->current_header] != ';') {
         temp_token.push_back(this->content[this->current_header]);
         this->current_header++;
     }
@@ -82,8 +82,8 @@ Tokenizer::tokenize_instruction() -> std::string
 auto
 Tokenizer::skip_comment() -> void
 {
-    while (this->content[this->current_header] != '\n' &&
-           this->current_header < this->content.size()) {
+    while (this->current_header < this->content.size() &&
+           this->content[this->current_header] != '\n') {
         this->current_header++;
     }
 }
