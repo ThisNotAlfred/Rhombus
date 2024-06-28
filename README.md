@@ -7,7 +7,7 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 | no argument | - | - |
 | register | `register` | - |
 | memory | `[memroy]` | - |
-| register-rgister | `register` | `register` |
+| register-register | `register` | `register` |
 | value-register | `$value` | `register` |
 | register-memory | `register` | `[memory]` |
 
