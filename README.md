@@ -85,14 +85,15 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 > don't program like this for Rhombus!
 
 ```asm
-mov_i 72 , i9
-mov_i 69 , i10
-mov_i 76 , i11
-mov_i 79 , i12
-mov_i 32 , i13
-mov_i 87 , i14
-mov_i 82 , i15
-mov_i 68 , i8
+; HELLO WORLD
+mov $72, i9
+mov $69, i10
+mov $76, i11
+mov $79, i12
+mov $32, i13
+mov $87, i14
+mov $82, i15
+mov $68, i8
 
 print i9
 print i10
