@@ -5,6 +5,7 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 | instruction | src | dest |
 | ----------- | -------------- | --------------- |
 | no argument | - | - |
+| label | `@label` | - |
 | register | `register` | - |
 | memory | `[memroy]` | - |
 | register-register | `register` | `register` |
