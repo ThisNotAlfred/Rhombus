@@ -89,7 +89,7 @@ each instruction can be one of these forms:
 | `scan` | one | scan from IO to register |
 | `scan_m` | one | scan from IO to memory |
 
-### flags 
+## flags 
 
 | flag | description |
 | ---- | ----------- |
@@ -104,7 +104,7 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 
 ## registers
 
-> purposes are just conventions and are not enforces.
+> purposes are just convention and are not enforced.
 
 | register | purpose |
 | -------- | ------- |
