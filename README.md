@@ -4,90 +4,43 @@ a minimal virtual machine inspired by arm amd riscv.
 it's work in progress so please be patient. development might be slow.
 
 ## instructions
-
-each instruction can be one of these forms:
 | instruction | source argument | destination argument |
 | ----------- | -------------- | --------------- |
 | no register | - | - |
 | one register mode | `register` | - |
 | one register memory mode | `[memroy]` | - |
-| two register mode | `source register` | `destination register` |
-| two register immediate mode | `value` | `register` |
+| two register mode | `source register` | `register` |
+| two register immediate mode | `$value` | `register` |
 | two register memory mode | `register` | `[memory]` |
 
-## register mode instructions
 
 ### control flow
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `mov` | two | copies data from source to destination |
-| `cmpre` | two | compares source to destination. checks for equality |
-| `cmprs` | two | compares source to destination. checks for source being smaller |
-| `jmp` | one | jumps to determined **program** instruction |
-| `jmpe` | one | jumps to determined **program** instruction if result of the last instruction was `zero = true` |
-| `jmpb` | one | jumps to determined **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
-| `jmps` | one | jumps to determined **program** instruction if result of the last instruction was `negative != overflow` |
+| instruction | description |
+| ----------- | ----------- |
+| `mov` | copies data from source to destination |
+| `cmpre` | compares source to destination. checks for equality |
+| `cmprs` | compares source to destination. checks for source being smaller |
+| `jmp` | jumps to **program** instruction |
+| `jmpe` | jumps to **program** instruction if result of the last instruction was `zero = true` |
+| `jmpb` | jumps to **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
+| `jmps` | jumps to **program** instruction if result of the last instruction was `negative != overflow` |
 
 ### arithmetic
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `add` | two | addition |
-| `sub` | two | subtraction |
-| `shr` | two | shift right |
-| `shl` | two | shift left |
-| `xor` | two | xor |
-| `or` | two | or |
-| `and` | two | and |
-
-## immediate mode instructions
-
-### control flow
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `mov_i` | two | copies data from source to destination |
-| `cmpre_i` | two | compares source to destination. checks for equality |
-| `cmprs_i` | two | compares source to destination. checks for source being smaller |
-
-### arithmetic
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `add_i` | two | addition |
-| `sub_i` | two | subtraction |
-| `shr_i` | two | shift right |
-| `shl_i` | two | shift left |
-| `xor_i` | two | xor |
-| `or_i` | two | or |
-| `and_i` | two | and |
-
-
-## memory mode instructions
-
-### control flow
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `mov_m` | two | copies data from source to destination |
-| `cmpre_m` | two | compares source to destination. checks for equality |
-| `cmprs_m` | two | compares source to destination. checks for source being smaller |
-
-### arithmetic
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `add_m` | two | addition |
-| `sub_m` | two | subtraction |
-| `shr_m` | two | shift right |
-| `shl_m` | two | shift left |
-| `xor_m` | two | xor |
-| `or_m` | two | or |
-| `and_m` | two | and |
+| instruction | description |
+| ----------- | ----------- |
+| `add` | addition |
+| `sub` | subtraction |
+| `shr` | shift right |
+| `shl` | shift left |
+| `xor` | xor |
+| `or` | or |
+| `and` | and |
 
 ## input and output
-
-| instruction | number of arguments | description |
-| ----------- | ------------------- | ----------- |
-| `print` | one | print register to IO |
-| `print_m` | one | print memory to IO |
-| `scan` | one | scan from IO to register |
-| `scan_m` | one | scan from IO to memory |
+| instruction | description |
+| ----------- | ----------- |
+| `print` | print register to IO |
+| `scan` | scan from IO to register |
 
 ## flags 
 
