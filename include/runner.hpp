@@ -31,16 +31,11 @@ class Runner
 
         private:
     std::vector<Instructions::Instruction>& instructions;
-
-    std::vector<std::uint16_t> memory = {};
-    std::size_t instruction_pointer   = 0;
+    std::vector<std::uint16_t> memory   = {};
+    std::array<std::uint16_t, 16> stack = {};
 
     bool negative_flag = false;
     bool zero_flag     = false;
     bool overflow_flag = false;
     bool carry_flag    = false;
-
-    std::array<std::uint16_t, 16> stack = {};
-    std::size_t stack_pointer          = 0;
-    std::size_t stack_base             = 0;
 };

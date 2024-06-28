@@ -1,7 +1,6 @@
 #include "tokenizer.hpp"
 
 #include <algorithm>
-#include <print>
 
 auto
 Tokenizer::tokenize() -> std::vector<std::string>
