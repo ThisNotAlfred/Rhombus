@@ -2,7 +2,7 @@
 a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV. 
 
 ## instructions
-| instruction type | src | dest |
+| instruction type | arg | arg |
 | ----------- | -------------- | --------------- |
 | no argument | - | - |
 | label | `@label` | - |
