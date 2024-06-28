@@ -4,12 +4,12 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 ## instructions
 | instruction | src | dest |
 | ----------- | -------------- | --------------- |
-| no register | - | - |
-| one register mode | `register` | - |
-| one register memory mode | `[memroy]` | - |
-| two register mode | `register` | `register` |
-| two register immediate mode | `$value` | `register` |
-| two register memory mode | `register` | `[memory]` |
+| no argument | - | - |
+| register mode | `register` | - |
+| memory mode | `[memroy]` | - |
+| register-rgister mode | `register` | `register` |
+| value-register mode | `$value` | `register` |
+| register-memory mode | `register` | `[memory]` |
 
 
 ### control flow
