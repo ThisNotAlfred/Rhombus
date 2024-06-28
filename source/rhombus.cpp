@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <print>
 
 auto
 read_file(const char* path) -> std::string
@@ -20,13 +21,13 @@ auto
 main(int argc, char* argv[]) -> int
 {
     if (argc < 2 || argc > 2) {
-        std::cerr
-            << "wrong number of arguments to input. only provide path to your `.rhom` file.\n";
+        std::print(stderr,
+                   "wrong number of arguments to input. only provide path to your `.rhom` file.\n");
         return -1;
     }
 
     if (!std::filesystem::exists(argv[1])) {
-        std::cerr << "provided input doesn't exist.\n";
+        std::print(stderr, "provided input doesn't exist.\n");
         return -1;
     }
 

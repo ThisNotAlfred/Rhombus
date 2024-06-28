@@ -14,25 +14,27 @@ Tokenizer::tokenize() -> std::vector<std::string>
             this->content[this->current_header] == '\t' ||
             this->content[this->current_header] == ',') {
             this->current_header++;
-            continue;
         }
 
-        if (this->content[this->current_header] == ';') {
+        else if (this->content[this->current_header] == ';') {
             skip_comment();
-            continue;
         }
 
-        if (this->content[this->current_header] == '"') {
+        else if (this->content[this->current_header] == '"') {
             tokens.push_back(this->tokenize_string());
-            continue;
         }
 
-        if (this->content[this->current_header] == '[') {
+        else if (this->content[this->current_header] == '#') {
+            tokens.push_back(this->tokenize_variable());
+        }
+
+        else if (this->content[this->current_header] == '[') {
             tokens.push_back(this->tokenize_brackets());
-            continue;
         }
 
-        tokens.push_back(this->tokenize_instruction());
+        else {
+            tokens.push_back(this->tokenize_instruction());
+        }
     }
 
     tokens.erase(
@@ -95,6 +97,25 @@ Tokenizer::tokenize_string() -> std::string
     while (this->current_header < this->content.size() &&
            this->content[this->current_header] != '\n' &&
            this->content[this->current_header] != '"') {
+        temp_token.push_back(this->content[this->current_header]);
+        this->current_header++;
+    }
+
+    auto token = std::string { temp_token.begin(), temp_token.end() };
+
+    return token;
+}
+
+auto
+Tokenizer::tokenize_variable() -> std::string
+{
+    std::vector<char> temp_token = {};
+
+    while (
+        this->current_header < this->content.size() &&
+        this->content[this->current_header] != '\n' && this->content[this->current_header] != ' ' &&
+        this->content[this->current_header] != ',' && this->content[this->current_header] != '[' &&
+        this->content[this->current_header] != ']' && this->content[this->current_header] != ';') {
         temp_token.push_back(this->content[this->current_header]);
         this->current_header++;
     }
