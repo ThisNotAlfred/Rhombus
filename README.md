@@ -25,7 +25,7 @@ each instruction can be one of these forms:
 | `cmprs` | two | compares source to destination. checks for source being smaller |
 | `jmp` | one | jumps to determined **program** instruction |
 | `jmpe` | one | jumps to determined **program** instruction if result of the last instruction was `zero = true` |
-| `jmpb` | one | jumps to determined **program** instruction if result of the last instruction was `zero = false` and `NegativeFlag = OverflowFlag` |
+| `jmpb` | one | jumps to determined **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
 | `jmps` | one | jumps to determined **program** instruction if result of the last instruction was `negative != overflow` |
 
 ### arithmetic
