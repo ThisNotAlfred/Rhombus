@@ -1,0 +1,4 @@
+@BEGINNING
+    scan i9
+    print i9
+    jmp @BEGINNING

@@ -2,6 +2,7 @@
 
 #include "instruction.hpp"
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -32,4 +33,5 @@ class Parser
 
         private:
     std::vector<std::string>& tokens;
+    std::map<std::string_view, std::size_t> labels = {};
 };

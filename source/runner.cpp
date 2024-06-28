@@ -90,7 +90,7 @@ Runner::run_mem_one_register(const Instructions::MemOneRegister& instruction) ->
             break;
 
         case Instructions::MemOneRegister::SCAN:
-            std::cin >> this->memory[instruction.dest];
+            this->memory[instruction.dest] = std::getchar();
             this->stack[0]++;
             break;
     }
@@ -106,7 +106,7 @@ Runner::run_one_register(const Instructions::OneRegister& instruction) -> void
             break;
 
         case Instructions::OneRegister::SCAN:
-            std::cin >> this->stack[instruction.dest];
+            this->stack[instruction.dest] = std::getchar();
             this->stack[0]++;
             break;
     }

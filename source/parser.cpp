@@ -1,11 +1,6 @@
 #include "parser.hpp"
 
-#include <algorithm>
-#include <iostream>
 #include <print>
-#include <string>
-#include <utility>
-#include <vector>
 
 namespace
 {
@@ -104,7 +99,13 @@ Parser::parse() -> std::vector<Instructions::Instruction>
     std::vector<Instructions::Instruction> instructions = {};
 
     for (std::size_t i = 0; i < this->tokens.size();) {
-        if (this->tokens[i] == "mov") {
+        if (this->tokens[i][0] == '@') {
+            instructions.emplace_back(Instructions::NoRegister { Instructions::NoRegister::NOP });
+            labels.emplace(this->tokens[i], instructions.back().index());
+            i += 1;
+        }
+
+        else if (this->tokens[i] == "mov") {
             instructions.emplace_back(this->parse_mov(i));
             i += 3;
         }
@@ -457,36 +458,64 @@ Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
 auto
 Parser::parse_jmp(std::size_t index) -> Instructions::Instruction
 {
+    std::size_t jump_dest = 0;
+    if (this->tokens[index + 1][0] == '@') {
+        jump_dest = this->labels[this->tokens[index + 1]];
+    } else {
+        jump_dest = parse_brackets(this->tokens[index + 1]);
+    }
+
     return Instructions::MemOneRegister {
         Instructions::MemOneRegister::JMP,
-        parse_brackets(this->tokens[index + 1]),
+        jump_dest,
     };
 }
 
 auto
 Parser::parse_jmpe(std::size_t index) -> Instructions::Instruction
 {
+    std::size_t jump_dest = 0;
+    if (this->tokens[index + 1][0] == '@') {
+        jump_dest = this->labels[this->tokens[index + 1]];
+    } else {
+        jump_dest = parse_brackets(this->tokens[index + 1]);
+    }
+
     return Instructions::MemOneRegister {
         Instructions::MemOneRegister::JMPE,
-        parse_brackets(this->tokens[index + 1]),
+        jump_dest,
     };
 }
 
 auto
 Parser::parse_jmpb(std::size_t index) -> Instructions::Instruction
 {
+    std::size_t jump_dest = 0;
+    if (this->tokens[index + 1][0] == '@') {
+        jump_dest = this->labels[this->tokens[index + 1]];
+    } else {
+        jump_dest = parse_brackets(this->tokens[index + 1]);
+    }
+
     return Instructions::MemOneRegister {
         Instructions::MemOneRegister::JMPB,
-        parse_brackets(this->tokens[index + 1]),
+        jump_dest,
     };
 }
 
 auto
 Parser::parse_jmps(std::size_t index) -> Instructions::Instruction
 {
+    std::size_t jump_dest = 0;
+    if (this->tokens[index + 1][0] == '@') {
+        jump_dest = this->labels[this->tokens[index + 1]];
+    } else {
+        jump_dest = parse_brackets(this->tokens[index + 1]);
+    }
+
     return Instructions::MemOneRegister {
         Instructions::MemOneRegister::JMPS,
-        parse_brackets(this->tokens[index + 1]),
+        jump_dest,
     };
 }
 
