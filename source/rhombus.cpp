@@ -1,5 +1,5 @@
 #include "parser.hpp"
-#include "runner.hpp"
+#include "core.hpp"
 #include "tokenizer.hpp"
 
 #include <filesystem>
@@ -34,7 +34,7 @@ main(int argc, char* argv[]) -> int
     auto contents  = read_file(argv[1]);
     auto tokenized = Tokenizer(contents).tokenize();
     auto parsed    = Parser(tokenized).parse();
-    auto runner    = Runner(parsed);
+    auto runner    = Core(parsed);
     runner.start();
 
     return 0;

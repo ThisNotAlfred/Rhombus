@@ -6,11 +6,11 @@
 #include <typeinfo>
 #include <vector> // namespace
 
-class Runner
+class Core
 {
         public:
-    Runner(std::vector<Instructions::Instruction>& instructions) : instructions(instructions) {};
-    ~Runner() = default;
+    Core(std::vector<Instructions::Instruction>& instructions) : instructions(instructions) {};
+    ~Core() = default;
 
     auto start() -> void;
 

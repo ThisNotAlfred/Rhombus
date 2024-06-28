@@ -1,4 +1,4 @@
-#include "runner.hpp"
+#include "core.hpp"
 #include "instruction.hpp"
 
 #include <iostream>
@@ -7,7 +7,7 @@
 #include <variant>
 
 auto
-Runner::start() -> void
+Core::start() -> void
 {
     // resizing from 0 to 64KB (2^^16 * 4 / 1024 * 16)
     memory.resize(static_cast<std::size_t>(65536 * 4 / 1024));
@@ -18,7 +18,7 @@ Runner::start() -> void
 }
 
 auto
-Runner::run_instruction(const Instructions::Instruction& instruction) -> void
+Core::run_instruction(const Instructions::Instruction& instruction) -> void
 {
     if (std::holds_alternative<Instructions::NoRegister>(instruction)) {
         switch (std::get<Instructions::NoRegister>(instruction).instruction) {
@@ -53,7 +53,7 @@ Runner::run_instruction(const Instructions::Instruction& instruction) -> void
 }
 
 auto
-Runner::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> void
+Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::MemOneRegister::JMP:
@@ -97,7 +97,7 @@ Runner::run_mem_one_register(const Instructions::MemOneRegister& instruction) ->
 }
 
 auto
-Runner::run_one_register(const Instructions::OneRegister& instruction) -> void
+Core::run_one_register(const Instructions::OneRegister& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::OneRegister::PRINT:
@@ -113,7 +113,7 @@ Runner::run_one_register(const Instructions::OneRegister& instruction) -> void
 }
 
 auto
-Runner::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> void
+Core::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.source);
 
@@ -189,7 +189,7 @@ Runner::run_mem_two_register(const Instructions::MemTwoRegister& instruction) ->
 }
 
 auto
-Runner::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) -> void
+Core::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.value);
 
@@ -263,7 +263,7 @@ Runner::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) ->
 }
 
 auto
-Runner::run_two_register(const Instructions::TwoRegister& instruction) -> void
+Core::run_two_register(const Instructions::TwoRegister& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::ImmTwoRegister::MOV:
@@ -335,7 +335,7 @@ Runner::run_two_register(const Instructions::TwoRegister& instruction) -> void
 }
 
 inline auto
-Runner::check_for_flags(std::uint16_t source, std::uint16_t dest,
+Core::check_for_flags(std::uint16_t source, std::uint16_t dest,
                         const std::function<std::int32_t(std::uint16_t, std::uint16_t)>& opr)
     -> void
 {
@@ -357,25 +357,25 @@ Runner::check_for_flags(std::uint16_t source, std::uint16_t dest,
 }
 
 inline auto
-Runner::set_negative() -> void
+Core::set_negative() -> void
 {
     this->negative_flag = !this->negative_flag;
 }
 
 inline auto
-Runner::set_zero() -> void
+Core::set_zero() -> void
 {
     this->zero_flag = !this->zero_flag;
 }
 
 inline auto
-Runner::set_overflow() -> void
+Core::set_overflow() -> void
 {
     this->overflow_flag = !this->overflow_flag;
 }
 
 inline auto
-Runner::set_carry() -> void
+Core::set_carry() -> void
 {
     this->carry_flag = !this->carry_flag;
 }

@@ -9,15 +9,15 @@ project(
 
 sources = [
     'source/rhombus.cpp',
+    'source/core.cpp',
     'source/parser.cpp',
-    'source/runner.cpp',
     'source/tokenizer.cpp',
 ]
 
 includes = [
     'include/instruction.hpp',
+    'include/core.hpp',
     'include/parser.hpp',
-    'include/runner.hpp',
     'include/tokenizer.hpp',
 ]
 

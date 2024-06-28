@@ -33,5 +33,6 @@ class Parser
 
         private:
     std::vector<std::string>& tokens;
-    std::map<std::string_view, std::size_t> labels = {};
+    std::map<std::string_view, std::size_t> labels         = {};
+    std::map<std::string_view, std::string_view> varibales = {};
 };
