@@ -17,30 +17,30 @@ it's work in progress so please be patient. development might be slow.
 ### control flow
 | instruction | description |
 | ----------- | ----------- |
-| `mov` | copies data from source to destination |
-| `cmpe` | compares source to destination. checks for equality |
-| `cmps` | compares source to destination. checks for source being smaller |
-| `jmp` | jumps to **program** instruction |
-| `jmpe` | jumps to **program** instruction if result of the last instruction was `zero = true` |
-| `jmpb` | jumps to **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
-| `jmps` | jumps to **program** instruction if result of the last instruction was `negative != overflow` |
+| `mov source, dest` | copies data from source to destination |
+| `cmpe source, dest` | compares source to destination. checks for equality |
+| `cmps source, dest` | compares source to destination. checks for source being smaller |
+| `jmp instruction` | jumps to **program** instruction |
+| `jmpe instruction` | jumps to **program** instruction if result of the last instruction was `zero = true` |
+| `jmpb instruction` | jumps to **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
+| `jmps instruction` | jumps to **program** instruction if result of the last instruction was `negative != overflow` |
 
 ### arithmetic
 | instruction | description |
 | ----------- | ----------- |
-| `add` | addition |
-| `sub` | subtraction |
-| `shr` | shift right |
-| `shl` | shift left |
-| `xor` | xor |
-| `or` | or |
-| `and` | and |
+| `add source, dest` | addition |
+| `sub source, dest` | subtraction |
+| `shr source, dest` | shift right |
+| `shl source, dest` | shift left |
+| `xor source, dest` | xor |
+| `or source, dest` | or |
+| `and source, dest` | and |
 
 ## input and output
 | instruction | description |
 | ----------- | ----------- |
-| `print` | print register to IO |
-| `scan` | scan from IO to register |
+| `print source` | print register to IO |
+| `scan dest` | scan from IO to register |
 
 ## flags 
 
