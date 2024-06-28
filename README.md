@@ -61,22 +61,22 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 
 | register | purpose |
 | -------- | ------- |
-| i0 | instruction pointer |
-| i1 | return address |
-| i2 | function argument |
-| i3 | function argument |
-| i4 | function argument |
-| i5 | function argument |
-| i6 | function argument |
-| i7 | function argument |
-| i8 | function argument |
-| i9 | general purpose |
-| i10 | general purpose |
-| i11 | general purpose |
-| i12 | general purpose |
-| i13 | general purpose |
-| i14 | general purpose |
-| i15 | general purpose |
+| `i0` | instruction pointer |
+| `i1` | return address |
+| `i2` | function argument |
+| `i3` | function argument |
+| `i4` | function argument |
+| `i5` | function argument |
+| `i6` | function argument |
+| `i7` | function argument |
+| `i8` | function argument |
+| `i9` | general purpose |
+| `i10` | general purpose |
+| `i11` | general purpose |
+| `i12` | general purpose |
+| `i13` | general purpose |
+| `i14` | general purpose |
+| `i15` | general purpose |
 
 # Examples
 
