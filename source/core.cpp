@@ -1,8 +1,7 @@
 #include "core.hpp"
 #include "instruction.hpp"
 
-#include <iostream>
-#include <print>
+#include <cstdio>
 #include <utility>
 #include <variant>
 
@@ -85,7 +84,7 @@ Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> v
             break;
 
         case Instructions::MemOneRegister::PRINT:
-            std::cout << static_cast<char>(this->memory[instruction.dest]) << std::flush;
+            std::putchar(static_cast<char>(this->stack[instruction.dest]));
             this->stack[0]++;
             break;
 
@@ -101,7 +100,7 @@ Core::run_one_register(const Instructions::OneRegister& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::OneRegister::PRINT:
-            std::cout << static_cast<char>(this->stack[instruction.dest]) << std::flush;
+            std::putchar(static_cast<char>(this->stack[instruction.dest]));
             this->stack[0]++;
             break;
 
@@ -336,8 +335,7 @@ Core::run_two_register(const Instructions::TwoRegister& instruction) -> void
 
 inline auto
 Core::check_for_flags(std::uint16_t source, std::uint16_t dest,
-                        const std::function<std::int32_t(std::uint16_t, std::uint16_t)>& opr)
-    -> void
+                      const std::function<std::int32_t(std::uint16_t, std::uint16_t)>& opr) -> void
 {
     if (opr(source, dest) == 0) {
         this->set_zero();
