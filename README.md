@@ -2,12 +2,12 @@
 a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV. 
 
 ## instructions
-| instruction | source argument | destination argument |
+| instruction | src | dest |
 | ----------- | -------------- | --------------- |
 | no register | - | - |
 | one register mode | `register` | - |
 | one register memory mode | `[memroy]` | - |
-| two register mode | `source register` | `register` |
+| two register mode | `register` | `register` |
 | two register immediate mode | `$value` | `register` |
 | two register memory mode | `register` | `[memory]` |
 
@@ -15,9 +15,9 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 ### control flow
 | instruction | description |
 | ----------- | ----------- |
-| `mov source, dest` | copies data from source to destination |
-| `cmpe source, dest` | compares source to destination. checks for equality |
-| `cmps source, dest` | compares source to destination. checks for source being smaller |
+| `mov src, dest` | copies data from source to destination |
+| `cmpe src, dest` | compares source to destination. checks for equality |
+| `cmps src, dest` | compares source to destination. checks for source being smaller |
 | `jmp instruction` | jumps to **program** instruction |
 | `jmpe instruction` | jumps to **program** instruction if result of the last instruction was `zero = true` |
 | `jmpb instruction` | jumps to **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
@@ -26,18 +26,18 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 ### arithmetic
 | instruction | description |
 | ----------- | ----------- |
-| `add source, dest` | addition |
-| `sub source, dest` | subtraction |
-| `shr source, dest` | shift right |
-| `shl source, dest` | shift left |
-| `xor source, dest` | xor |
-| `or source, dest` | or |
-| `and source, dest` | and |
+| `add src, dest` | addition |
+| `sub src, dest` | subtraction |
+| `shr src, dest` | shift right |
+| `shl src, dest` | shift left |
+| `xor src, dest` | xor |
+| `or src, dest` | or |
+| `and src, dest` | and |
 
 ## input and output
 | instruction | description |
 | ----------- | ----------- |
-| `print source` | print register to IO |
+| `print src` | print register to IO |
 | `scan dest` | scan from IO to register |
 
 ## flags 
