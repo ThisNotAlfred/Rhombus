@@ -24,9 +24,9 @@ each instruction can be one of these forms:
 | `cmpre` | two | compares source to destination. checks for equality |
 | `cmprs` | two | compares source to destination. checks for source being smaller |
 | `jmp` | one | jumps to determined **program** instruction |
-| `jmpe` | one | jumps to determined **program** instruction if result of the last instruction was `ZeroFlag = true` |
-| `jmpb` | one | jumps to determined **program** instruction if result of the last instruction was `ZeroFlag = false` and `NegativeFlag = OverflowFlag` |
-| `jmps` | one | jumps to determined **program** instruction if result of the last instruction was `NegativeFlag != OverflowFlag` |
+| `jmpe` | one | jumps to determined **program** instruction if result of the last instruction was `zero = true` |
+| `jmpb` | one | jumps to determined **program** instruction if result of the last instruction was `zero = false` and `NegativeFlag = OverflowFlag` |
+| `jmps` | one | jumps to determined **program** instruction if result of the last instruction was `negative != overflow` |
 
 ### arithmetic
 | instruction | number of arguments | description |
@@ -93,14 +93,14 @@ each instruction can be one of these forms:
 
 | flag | description |
 | ---- | ----------- |
-| `NegativeFlag` | if result of the last operation was negative, set to `true` |
-| `ZeroFlag` | if result of the last operation was zero, set to `true` |
-| `OverflowFlag` | if result of the last operation caused **signed overflow**, set to `true` |
-| `CarryFlag` | if result of the last operation caused **unsigned overflow**, set to `true` |
+| `negative` | if result of the last operation was negative, set to `true` |
+| `zero` | if result of the last operation was zero, set to `true` |
+| `overflow` | if result of the last operation caused **signed overflow**, set to `true` |
+| `carry` | if result of the last operation caused **unsigned overflow**, set to `true` |
 
 ## memory
 
-the machine has 128KB of fixed-size memory that you can access 64KB through direct access. your program is **separate** and doesn't take anything from it.
+the machine has 64KB of fixed-size memory that you have direct access. your program is **separate** and doesn't take anything from it.
 
 ## registers
 
@@ -109,15 +109,15 @@ you have access to 8 of 16bit integer registers. you can access them through i0 
 
 | register | purpose |
 | -------- | ------- |
-| i0 | return address |
-| i1 | function register |
-| i2 | function register |
-| i3 | function register |
-| i4 | function register |
-| i5 | genral purpose |
-| i6 | general purpose |
-| i7 | general purpose |
-| i8 | general purpose |
+| i0 | instruction pointer |
+| i1 | return address |
+| i2 | function argument |
+| i3 | function argument |
+| i4 | function argument |
+| i5 | function argument |
+| i6 | function argument |
+| i7 | function argument |
+| i8 | function argument |
 | i9 | general purpose |
 | i10 | general purpose |
 | i11 | general purpose |
@@ -133,24 +133,24 @@ you have access to 8 of 16bit integer registers. you can access them through i0 
 > don't program like this for Rhombus!
 
 ```asm
-mov_i 72 , i0
-mov_i 69 , i1
-mov_i 76 , i2
-mov_i 79 , i3
-mov_i 32 , i4
-mov_i 87 , i5
-mov_i 82 , i6
-mov_i 68 , i7
+mov_i 72 , i9
+mov_i 69 , i10
+mov_i 76 , i11
+mov_i 79 , i12
+mov_i 32 , i13
+mov_i 87 , i14
+mov_i 82 , i15
+mov_i 68 , i8
 
-print i0
-print i1
-print i2
-print i2
-print i3
-print i4
-print i5
-print i3
-print i6
-print i2
-print i7
+print i9
+print i10
+print i11
+print i11
+print i12
+print i13
+print i14
+print i12
+print i15
+print i11
+print i8
 ```
