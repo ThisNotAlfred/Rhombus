@@ -83,14 +83,9 @@ get_register(std::string_view reg)
 inline auto
 parse_value(std::string& token)
 {
-    std::uint16_t value = 0;
     token.erase(token.begin());
 
-    for (auto chr : token) {
-        value += chr - '0';
-    }
-
-    return value;
+    return static_cast<std::uint16_t>(std::stoi(token));
 }
 
 inline auto

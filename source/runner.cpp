@@ -9,9 +9,6 @@
 auto
 Runner::start() -> void
 {
-    // start stack with all ZEROs
-    stack = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
     // resizing from 0 to 64KB (2^^16 * 4 / 1024 * 16)
     memory.resize(static_cast<std::size_t>(65536 * 4 / 1024));
 
