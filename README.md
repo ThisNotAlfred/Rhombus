@@ -1,7 +1,5 @@
 # Rhombus
-a minimal virtual machine inspired by arm amd riscv.
-
-it's work in progress so please be patient. development might be slow.
+a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV. 
 
 ## instructions
 | instruction | source argument | destination argument |
