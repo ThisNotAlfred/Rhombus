@@ -90,7 +90,7 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 ```asm
 ; examples/hello_world.rhom
 @STR
-    db "HELLO, WORLD!", $23
+    db "HELLO, WORLD!"
     
     mov $0, i9
 @PRINT_LOOP

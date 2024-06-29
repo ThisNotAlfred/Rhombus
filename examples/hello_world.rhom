@@ -1,5 +1,5 @@
 @STR
-    db "HELLO, WORLD!", $13
+    db "HELLO, WORLD!"
     
     mov $0, i9
 @PRINT_LOOP
