@@ -14,7 +14,6 @@ class Parser
 
     auto parse() -> std::vector<Instructions::Instruction>;
 
-    auto parse_db(std::size_t index) -> Instructions::Instruction;
     auto parse_mov(std::size_t index) -> Instructions::Instruction;
     auto parse_add(std::size_t index) -> Instructions::Instruction;
     auto parse_sub(std::size_t index) -> Instructions::Instruction;

@@ -125,8 +125,11 @@ Parser::parse() -> std::vector<Instructions::Instruction>
         }
 
         else if (this->tokens[i] == "db") {
-            instructions.emplace_back(this->parse_db(i));
-            i += 3;
+            for (const auto& chr : this->tokens[i + 1]) {
+                instructions.emplace_back(
+                    Instructions::Data { static_cast<Instructions::Data>(chr) });
+            }
+            i += 2;
         }
 
         else if (this->tokens[i] == "mov") {
@@ -217,16 +220,6 @@ Parser::parse() -> std::vector<Instructions::Instruction>
     }
 
     return instructions;
-}
-
-auto
-Parser::parse_db(std::size_t index) -> Instructions::Instruction
-{
-    return Instructions::DataTwoOp {
-        Instructions::DataTwoOp::DB,
-        this->tokens[index + 1],
-        parse_value(this->tokens[index + 2]),
-    };
 }
 
 auto

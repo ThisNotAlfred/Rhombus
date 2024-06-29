@@ -139,15 +139,8 @@ struct IndexTwoOp {
     Register dest;
 };
 
-struct DataTwoOp {
-    enum {
-        DB,
-    } instruction;
+using Data = std::uint8_t;
 
-    std::string data;
-    std::size_t data_size;
-};
-
-using Instruction = std::variant<NoOp, OneOp, MemOneOp, IndexOneOp, TwoOp, ImmTwoOp, MemTwoOp,
-                                 IndexTwoOp, DataTwoOp>;
+using Instruction =
+    std::variant<NoOp, OneOp, MemOneOp, IndexOneOp, TwoOp, ImmTwoOp, MemTwoOp, IndexTwoOp, Data>;
 } // namespace Instructions
