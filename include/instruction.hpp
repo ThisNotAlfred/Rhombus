@@ -136,6 +136,7 @@ struct IndexTwoOp {
 
     Register index_register;
     Pointer beginning_of_data;
+    Register dest;
 };
 
 struct DataTwoOp {

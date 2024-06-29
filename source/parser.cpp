@@ -248,6 +248,17 @@ Parser::parse_mov(std::size_t index) -> Instructions::Instruction
         };
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::MOV,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
+        };
+    }
+
     return Instructions::TwoOp {
         Instructions::TwoOp::MOV,
         get_register(this->tokens[index + 1]),
@@ -271,6 +282,17 @@ Parser::parse_add(std::size_t index) -> Instructions::Instruction
             Instructions::MemTwoOp::ADD,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
+        };
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::ADD,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
         };
     }
 
@@ -300,6 +322,17 @@ Parser::parse_sub(std::size_t index) -> Instructions::Instruction
         };
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::SUB,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
+        };
+    }
+
     return Instructions::TwoOp {
         Instructions::TwoOp::SUB,
         get_register(this->tokens[index + 1]),
@@ -323,6 +356,17 @@ Parser::parse_shr(std::size_t index) -> Instructions::Instruction
             Instructions::MemTwoOp::SHR,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
+        };
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::SHR,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
         };
     }
 
@@ -352,6 +396,17 @@ Parser::parse_shl(std::size_t index) -> Instructions::Instruction
         };
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::SHL,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
+        };
+    }
+
     return Instructions::TwoOp {
         Instructions::TwoOp::SHL,
         get_register(this->tokens[index + 1]),
@@ -375,6 +430,17 @@ Parser::parse_xor(std::size_t index) -> Instructions::Instruction
             Instructions::MemTwoOp::XOR,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
+        };
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::XOR,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
         };
     }
 
@@ -404,6 +470,17 @@ Parser::parse_or(std::size_t index) -> Instructions::Instruction
         };
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::OR,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
+        };
+    }
+
     return Instructions::TwoOp {
         Instructions::TwoOp::OR,
         get_register(this->tokens[index + 1]),
@@ -427,6 +504,17 @@ Parser::parse_and(std::size_t index) -> Instructions::Instruction
             Instructions::MemTwoOp::AND,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
+        };
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::AND,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
         };
     }
 
@@ -456,6 +544,17 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
         };
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::CMPRE,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
+        };
+    }
+
     return Instructions::TwoOp {
         Instructions::TwoOp::CMPRE,
         get_register(this->tokens[index + 1]),
@@ -482,6 +581,17 @@ Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
         };
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexTwoOp {
+            Instructions::IndexTwoOp::CMPRS,
+            data_index,
+            this->labels[label],
+            get_register(this->tokens[index + 2]),
+        };
+    }
+
     return Instructions::TwoOp {
         Instructions::TwoOp::CMPRS,
         get_register(this->tokens[index + 1]),
@@ -497,6 +607,16 @@ Parser::parse_jmp(std::size_t index) -> Instructions::Instruction
         jump_dest = this->labels[this->tokens[index + 1]];
     } else {
         jump_dest = parse_brackets(this->tokens[index + 1]);
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexOneOp {
+            Instructions::IndexOneOp::JMP,
+            data_index,
+            this->labels[label],
+        };
     }
 
     return Instructions::MemOneOp {
@@ -515,6 +635,16 @@ Parser::parse_jmpe(std::size_t index) -> Instructions::Instruction
         jump_dest = parse_brackets(this->tokens[index + 1]);
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexOneOp {
+            Instructions::IndexOneOp::JMPE,
+            data_index,
+            this->labels[label],
+        };
+    }
+
     return Instructions::MemOneOp {
         Instructions::MemOneOp::JMPE,
         jump_dest,
@@ -531,6 +661,16 @@ Parser::parse_jmpb(std::size_t index) -> Instructions::Instruction
         jump_dest = parse_brackets(this->tokens[index + 1]);
     }
 
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexOneOp {
+            Instructions::IndexOneOp::JMPB,
+            data_index,
+            this->labels[label],
+        };
+    }
+
     return Instructions::MemOneOp {
         Instructions::MemOneOp::JMPB,
         jump_dest,
@@ -545,6 +685,16 @@ Parser::parse_jmps(std::size_t index) -> Instructions::Instruction
         jump_dest = this->labels[this->tokens[index + 1]];
     } else {
         jump_dest = parse_brackets(this->tokens[index + 1]);
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexOneOp {
+            Instructions::IndexOneOp::JMPS,
+            data_index,
+            this->labels[label],
+        };
     }
 
     return Instructions::MemOneOp {
