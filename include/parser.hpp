@@ -22,8 +22,7 @@ class Parser
     auto parse_xor(std::size_t index) -> Instructions::Instruction;
     auto parse_or(std::size_t index) -> Instructions::Instruction;
     auto parse_and(std::size_t index) -> Instructions::Instruction;
-    auto parse_cmpe(std::size_t index) -> Instructions::Instruction;
-    auto parse_cmps(std::size_t index) -> Instructions::Instruction;
+    auto parse_cmp(std::size_t index) -> Instructions::Instruction;
     auto parse_jmp(std::size_t index) -> Instructions::Instruction;
     auto parse_jmpe(std::size_t index) -> Instructions::Instruction;
     auto parse_jmpb(std::size_t index) -> Instructions::Instruction;

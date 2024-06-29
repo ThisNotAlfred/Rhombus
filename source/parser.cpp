@@ -119,8 +119,7 @@ Parser::parse() -> std::vector<Instructions::Instruction>
 
     for (std::size_t i = 0; i < this->tokens.size();) {
         if (this->tokens[i][0] == '@') {
-            instructions.emplace_back(Instructions::NoOp { Instructions::NoOp::NOP });
-            this->labels.emplace(this->tokens[i], instructions.back().index());
+            this->labels.emplace(this->tokens[i], instructions.size());
             i += 1;
         }
 
@@ -172,13 +171,8 @@ Parser::parse() -> std::vector<Instructions::Instruction>
             i += 3;
         }
 
-        else if (this->tokens[i] == "cmpe") {
-            instructions.emplace_back(this->parse_cmpe(i));
-            i += 3;
-        }
-
-        else if (this->tokens[i] == "cmps") {
-            instructions.emplace_back(this->parse_cmps(i));
+        else if (this->tokens[i] == "cmp") {
+            instructions.emplace_back(this->parse_cmp(i));
             i += 3;
         }
 
@@ -211,6 +205,11 @@ Parser::parse() -> std::vector<Instructions::Instruction>
         else if (this->tokens[i] == "scan") {
             instructions.emplace_back(this->parse_scan(i));
             i += 2;
+        }
+
+        else if (this->tokens[i] == "nop") {
+            instructions.emplace_back(Instructions::NoOp { Instructions::NoOp::NOP });
+            i += 1;
         }
 
         else {
@@ -519,11 +518,11 @@ Parser::parse_and(std::size_t index) -> Instructions::Instruction
 }
 
 auto
-Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
+Parser::parse_cmp(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
         return Instructions::ImmTwoOp {
-            Instructions::ImmTwoOp::CMPE,
+            Instructions::ImmTwoOp::CMP,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
@@ -531,7 +530,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
 
     if (this->tokens[index + 2][0] == '[') {
         return Instructions::MemTwoOp {
-            Instructions::MemTwoOp::CMPE,
+            Instructions::MemTwoOp::CMP,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
@@ -541,7 +540,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
         const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
 
         return Instructions::IndexTwoOp {
-            Instructions::IndexTwoOp::CMPE,
+            Instructions::IndexTwoOp::CMP,
             data_index,
             this->labels[label],
             get_register(this->tokens[index + 2]),
@@ -549,44 +548,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
     }
 
     return Instructions::TwoOp {
-        Instructions::TwoOp::CMPE,
-        get_register(this->tokens[index + 1]),
-        get_register(this->tokens[index + 2]),
-    };
-}
-
-auto
-Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
-{
-    if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoOp {
-            Instructions::ImmTwoOp::CMPS,
-            parse_value(this->tokens[index + 1]),
-            get_register(this->tokens[index + 2]),
-        };
-    }
-
-    if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoOp {
-            Instructions::MemTwoOp::CMPS,
-            get_register(this->tokens[index + 1]),
-            parse_brackets(this->tokens[index + 2]),
-        };
-    }
-
-    if (this->tokens[index + 1][0] == '#') {
-        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
-
-        return Instructions::IndexTwoOp {
-            Instructions::IndexTwoOp::CMPS,
-            data_index,
-            this->labels[label],
-            get_register(this->tokens[index + 2]),
-        };
-    }
-
-    return Instructions::TwoOp {
-        Instructions::TwoOp::CMPS,
+        Instructions::TwoOp::CMP,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
