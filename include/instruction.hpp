@@ -58,7 +58,7 @@ struct IndexOneOp {
         PRINT,
     } instruction;
 
-    std::uint16_t index;
+    Register index_register;
     Pointer beginning_of_data;
 };
 
@@ -130,7 +130,7 @@ struct IndexTwoOp {
         CMPRS,
     } instruction;
 
-    std::uint16_t index;
+    Register index_register;
     Pointer beginning_of_data;
 };
 

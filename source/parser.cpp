@@ -5,7 +5,7 @@
 namespace
 {
 inline auto
-get_register(std::string_view reg)
+get_register(std::string& reg)
 {
     if (reg == "i0") {
         return Instructions::Register::i0;
@@ -87,9 +87,28 @@ inline auto
 parse_brackets(std::string& token)
 {
     token.erase(token.begin());
-    token.erase(token.end());
 
     return static_cast<std::uint16_t>(std::stoi(token));
+}
+
+inline auto
+parse_variable(std::string& token)
+{
+    auto split_point = token.find('[');
+
+    // reconstructing label
+    std::string label = {};
+    label.append(token.data(), split_point);
+    label.replace(0, 1, "@");
+
+    std::string index_token = token.substr(split_point, token.size() - split_point);
+    // removing brackets
+    index_token.erase(index_token.begin());
+    index_token.erase(index_token.find(']'));
+    // parsing index
+    auto index = get_register(index_token);
+
+    return std::make_pair(label, index);
 }
 }; // namespace
 
@@ -541,6 +560,16 @@ Parser::parse_print(std::size_t index) -> Instructions::Instruction
         return Instructions::MemOneOp {
             Instructions::MemOneOp::PRINT,
             parse_brackets(this->tokens[index + 1]),
+        };
+    }
+
+    if (this->tokens[index + 1][0] == '#') {
+        const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
+
+        return Instructions::IndexOneOp {
+            Instructions::IndexOneOp::PRINT,
+            data_index,
+            this->labels[label],
         };
     }
 
