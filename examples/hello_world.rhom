@@ -4,5 +4,5 @@
 @PRINT_LOOP
     print #STR[i9]
     add $1, i9
-    cmp $9, i9
+    cmp $13, i9
     jmps @PRINT_LOOP

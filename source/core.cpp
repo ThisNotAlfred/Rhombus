@@ -377,7 +377,7 @@ Core::run_imm_two_op(const Instructions::ImmTwoOp& instruction) -> void
             break;
 
         case Instructions::ImmTwoOp::CMP:
-            this->check_for_flags(value, this->memory[instruction.dest],
+            this->check_for_flags(value, this->registers[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest - src; });
             this->registers[0]++;
             break;
