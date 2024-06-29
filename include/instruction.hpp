@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include <variant>
 
 namespace Instructions
@@ -26,11 +27,11 @@ enum Register {
 
 using MemoryCell = std::size_t;
 
-struct NoRegister {
+struct NoOp {
     enum { NOP } instruction;
 };
 
-struct OneRegister {
+struct OneOp {
     enum {
         PRINT,
         SCAN,
@@ -39,7 +40,7 @@ struct OneRegister {
     Register dest;
 };
 
-struct MemOneRegister {
+struct MemOneOp {
     enum {
         JMP,
         JMPE,
@@ -52,7 +53,8 @@ struct MemOneRegister {
     MemoryCell dest;
 };
 
-struct TwoRegister {
+
+struct TwoOp {
     enum {
         MOV,
         SHR,
@@ -70,7 +72,7 @@ struct TwoRegister {
     Register dest;
 };
 
-struct ImmTwoRegister {
+struct ImmTwoOp {
     enum {
         MOV,
         SHR,
@@ -88,7 +90,7 @@ struct ImmTwoRegister {
     Register dest;
 };
 
-struct MemTwoRegister {
+struct MemTwoOp {
     enum {
         MOV,
         SHR,
@@ -106,6 +108,14 @@ struct MemTwoRegister {
     MemoryCell dest;
 };
 
-using Instruction = std::variant<NoRegister, OneRegister, MemOneRegister, TwoRegister,
-                                 ImmTwoRegister, MemTwoRegister>;
+struct DataTwoOp {
+    enum {
+        DB,
+    } instruction;
+
+    std::string data;
+    std::size_t data_size;
+};
+
+using Instruction = std::variant<NoOp, OneOp, MemOneOp, TwoOp, ImmTwoOp, MemTwoOp, DataTwoOp>;
 } // namespace Instructions

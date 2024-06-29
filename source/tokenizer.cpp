@@ -118,8 +118,7 @@ Tokenizer::tokenize_variable() -> std::string
         this->current_header < this->content.size() &&
         this->content[this->current_header] != '\n' &&
         this->content[this->current_header] != '\r' && this->content[this->current_header] != ' ' &&
-        this->content[this->current_header] != ',' && this->content[this->current_header] != '[' &&
-        this->content[this->current_header] != ']' && this->content[this->current_header] != ';') {
+        this->content[this->current_header] != ',' && this->content[this->current_header] != ';') {
         temp_token.push_back(this->content[this->current_header]);
         this->current_header++;
     }

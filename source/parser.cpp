@@ -100,9 +100,14 @@ Parser::parse() -> std::vector<Instructions::Instruction>
 
     for (std::size_t i = 0; i < this->tokens.size();) {
         if (this->tokens[i][0] == '@') {
-            instructions.emplace_back(Instructions::NoRegister { Instructions::NoRegister::NOP });
-            labels.emplace(this->tokens[i], instructions.back().index());
+            instructions.emplace_back(Instructions::NoOp { Instructions::NoOp::NOP });
+            this->labels.emplace(this->tokens[i], instructions.back().index());
             i += 1;
+        }
+
+        else if (this->tokens[i] == "db") {
+            instructions.emplace_back(this->parse_db(i));
+            i += 3;
         }
 
         else if (this->tokens[i] == "mov") {
@@ -196,26 +201,36 @@ Parser::parse() -> std::vector<Instructions::Instruction>
 }
 
 auto
+Parser::parse_db(std::size_t index) -> Instructions::Instruction
+{
+    return Instructions::DataTwoOp {
+        Instructions::DataTwoOp::DB,
+        this->tokens[index + 1],
+        parse_value(this->tokens[index + 2]),
+    };
+}
+
+auto
 Parser::parse_mov(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::MOV,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::MOV,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::MOV,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::MOV,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::MOV,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::MOV,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -225,23 +240,23 @@ auto
 Parser::parse_add(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::ADD,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::ADD,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::ADD,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::ADD,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::ADD,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::ADD,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -251,23 +266,23 @@ auto
 Parser::parse_sub(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::SUB,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::SUB,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::SUB,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::SUB,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::SUB,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::SUB,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -277,23 +292,23 @@ auto
 Parser::parse_shr(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::SHR,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::SHR,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::SHR,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::SHR,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::SHR,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::SHR,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -303,23 +318,23 @@ auto
 Parser::parse_shl(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::SHL,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::SHL,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::SHL,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::SHL,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::SHL,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::SHL,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -329,23 +344,23 @@ auto
 Parser::parse_xor(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::XOR,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::XOR,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::XOR,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::XOR,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::XOR,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::XOR,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -355,23 +370,23 @@ auto
 Parser::parse_or(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::OR,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::OR,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::OR,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::OR,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::OR,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::OR,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -381,23 +396,23 @@ auto
 Parser::parse_and(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::AND,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::AND,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::AND,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::AND,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::AND,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::AND,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -407,23 +422,23 @@ auto
 Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::CMPRE,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::CMPRE,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::CMPRE,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::CMPRE,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::CMPRE,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::CMPRE,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -433,23 +448,23 @@ auto
 Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
-        return Instructions::ImmTwoRegister {
-            Instructions::ImmTwoRegister::CMPRS,
+        return Instructions::ImmTwoOp {
+            Instructions::ImmTwoOp::CMPRS,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
     }
 
     if (this->tokens[index + 2][0] == '[') {
-        return Instructions::MemTwoRegister {
-            Instructions::MemTwoRegister::CMPRS,
+        return Instructions::MemTwoOp {
+            Instructions::MemTwoOp::CMPRS,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
     }
 
-    return Instructions::TwoRegister {
-        Instructions::TwoRegister::CMPRS,
+    return Instructions::TwoOp {
+        Instructions::TwoOp::CMPRS,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -465,8 +480,8 @@ Parser::parse_jmp(std::size_t index) -> Instructions::Instruction
         jump_dest = parse_brackets(this->tokens[index + 1]);
     }
 
-    return Instructions::MemOneRegister {
-        Instructions::MemOneRegister::JMP,
+    return Instructions::MemOneOp {
+        Instructions::MemOneOp::JMP,
         jump_dest,
     };
 }
@@ -481,8 +496,8 @@ Parser::parse_jmpe(std::size_t index) -> Instructions::Instruction
         jump_dest = parse_brackets(this->tokens[index + 1]);
     }
 
-    return Instructions::MemOneRegister {
-        Instructions::MemOneRegister::JMPE,
+    return Instructions::MemOneOp {
+        Instructions::MemOneOp::JMPE,
         jump_dest,
     };
 }
@@ -497,8 +512,8 @@ Parser::parse_jmpb(std::size_t index) -> Instructions::Instruction
         jump_dest = parse_brackets(this->tokens[index + 1]);
     }
 
-    return Instructions::MemOneRegister {
-        Instructions::MemOneRegister::JMPB,
+    return Instructions::MemOneOp {
+        Instructions::MemOneOp::JMPB,
         jump_dest,
     };
 }
@@ -513,8 +528,8 @@ Parser::parse_jmps(std::size_t index) -> Instructions::Instruction
         jump_dest = parse_brackets(this->tokens[index + 1]);
     }
 
-    return Instructions::MemOneRegister {
-        Instructions::MemOneRegister::JMPS,
+    return Instructions::MemOneOp {
+        Instructions::MemOneOp::JMPS,
         jump_dest,
     };
 }
@@ -523,14 +538,14 @@ auto
 Parser::parse_print(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '[') {
-        return Instructions::MemOneRegister {
-            Instructions::MemOneRegister::PRINT,
+        return Instructions::MemOneOp {
+            Instructions::MemOneOp::PRINT,
             parse_brackets(this->tokens[index + 1]),
         };
     }
 
-    return Instructions::OneRegister {
-        Instructions::OneRegister::PRINT,
+    return Instructions::OneOp {
+        Instructions::OneOp::PRINT,
         get_register(this->tokens[index + 1]),
     };
 }
@@ -539,14 +554,14 @@ auto
 Parser::parse_scan(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '[') {
-        return Instructions::MemOneRegister {
-            Instructions::MemOneRegister::SCAN,
+        return Instructions::MemOneOp {
+            Instructions::MemOneOp::SCAN,
             parse_brackets(this->tokens[index + 1]),
         };
     }
 
-    return Instructions::OneRegister {
-        Instructions::OneRegister::SCAN,
+    return Instructions::OneOp {
+        Instructions::OneOp::SCAN,
         get_register(this->tokens[index + 1]),
     };
 }
