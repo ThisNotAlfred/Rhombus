@@ -34,11 +34,16 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 | `or src, dest` | or |
 | `and src, dest` | and |
 
-## input and output
+### input and output
 | instruction | description |
 | ----------- | ----------- |
 | `print src` | print register to IO |
 | `scan dest` | scan from IO to register |
+
+### data
+| instruction | description |
+| ----------- | ----------- |
+| `db data, $data_size | this instruction gives a pointer relative to program's beginning for use later |
 
 ## flags 
 
@@ -78,6 +83,20 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 
 # Examples
 
+## hello world
+
+```asm
+; examples/hello_world.rhom
+@STR1
+    db "HELLO, WORLD!", $23
+    
+    mov $0, i9
+@PRINT_LOOP
+    print #STR[i9]
+    add $1, i9
+    cmps $14, i9
+    jmps @PRINT_LOOP
+```
 ## basic repeater
 ```asm
 ; examples/repeater.rhom
