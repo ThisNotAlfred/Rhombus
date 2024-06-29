@@ -8,8 +8,10 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 | label | `@label` | - |
 | register | `register` | - |
 | memory | `[memroy]` | - |
+| index | `#label[index]` |
 | register-register | `register` | `register` |
 | value-register | `$value` | `register` |
+| index-register | `#label[index]` | `register` |
 | register-memory | `register` | `[memory]` |
 
 ### control flow

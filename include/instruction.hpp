@@ -55,6 +55,10 @@ struct MemOneOp {
 
 struct IndexOneOp {
     enum {
+        JMP,
+        JMPE,
+        JMPB,
+        JMPS,
         PRINT,
     } instruction;
 
