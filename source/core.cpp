@@ -27,23 +27,23 @@ Core::run_instruction(const Instructions::Instruction& instruction) -> void
     }
 
     else if (std::holds_alternative<Instructions::MemOneOp>(instruction)) {
-        this->run_mem_one_register(std::get<Instructions::MemOneOp>(instruction));
+        this->run_mem_one_op(std::get<Instructions::MemOneOp>(instruction));
     }
 
     else if (std::holds_alternative<Instructions::OneOp>(instruction)) {
-        this->run_one_register(std::get<Instructions::OneOp>(instruction));
+        this->run_one_op(std::get<Instructions::OneOp>(instruction));
     }
 
     else if (std::holds_alternative<Instructions::MemTwoOp>(instruction)) {
-        this->run_mem_two_register(std::get<Instructions::MemTwoOp>(instruction));
+        this->run_mem_two_op(std::get<Instructions::MemTwoOp>(instruction));
     }
 
     else if (std::holds_alternative<Instructions::ImmTwoOp>(instruction)) {
-        this->run_imm_two_register(std::get<Instructions::ImmTwoOp>(instruction));
+        this->run_imm_two_op(std::get<Instructions::ImmTwoOp>(instruction));
     }
 
     else if (std::holds_alternative<Instructions::TwoOp>(instruction)) {
-        this->run_two_register(std::get<Instructions::TwoOp>(instruction));
+        this->run_two_op(std::get<Instructions::TwoOp>(instruction));
     }
 
     else {
@@ -52,7 +52,7 @@ Core::run_instruction(const Instructions::Instruction& instruction) -> void
 }
 
 auto
-Core::run_mem_one_register(const Instructions::MemOneOp& instruction) -> void
+Core::run_mem_one_op(const Instructions::MemOneOp& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::MemOneOp::JMP:
@@ -96,7 +96,7 @@ Core::run_mem_one_register(const Instructions::MemOneOp& instruction) -> void
 }
 
 auto
-Core::run_one_register(const Instructions::OneOp& instruction) -> void
+Core::run_one_op(const Instructions::OneOp& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::OneOp::PRINT:
@@ -112,7 +112,7 @@ Core::run_one_register(const Instructions::OneOp& instruction) -> void
 }
 
 auto
-Core::run_mem_two_register(const Instructions::MemTwoOp& instruction) -> void
+Core::run_mem_two_op(const Instructions::MemTwoOp& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.source);
 
@@ -188,7 +188,7 @@ Core::run_mem_two_register(const Instructions::MemTwoOp& instruction) -> void
 }
 
 auto
-Core::run_imm_two_register(const Instructions::ImmTwoOp& instruction) -> void
+Core::run_imm_two_op(const Instructions::ImmTwoOp& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.value);
 
@@ -262,7 +262,7 @@ Core::run_imm_two_register(const Instructions::ImmTwoOp& instruction) -> void
 }
 
 auto
-Core::run_two_register(const Instructions::TwoOp& instruction) -> void
+Core::run_two_op(const Instructions::TwoOp& instruction) -> void
 {
     switch (instruction.instruction) {
         case Instructions::ImmTwoOp::MOV:

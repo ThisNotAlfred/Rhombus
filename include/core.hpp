@@ -4,7 +4,7 @@
 
 #include <functional>
 #include <typeinfo>
-#include <vector> // namespace
+#include <vector>
 
 class Core
 {
@@ -16,11 +16,11 @@ class Core
 
     auto run_instruction(const Instructions::Instruction& instruction) -> void;
 
-    auto run_mem_one_register(const Instructions::MemOneOp& instruction) -> void;
-    auto run_one_register(const Instructions::OneOp& instruction) -> void;
-    auto run_mem_two_register(const Instructions::MemTwoOp& instruction) -> void;
-    auto run_imm_two_register(const Instructions::ImmTwoOp& instruction) -> void;
-    auto run_two_register(const Instructions::TwoOp& instruction) -> void;
+    auto run_mem_one_op(const Instructions::MemOneOp& instruction) -> void;
+    auto run_one_op(const Instructions::OneOp& instruction) -> void;
+    auto run_mem_two_op(const Instructions::MemTwoOp& instruction) -> void;
+    auto run_imm_two_op(const Instructions::ImmTwoOp& instruction) -> void;
+    auto run_two_op(const Instructions::TwoOp& instruction) -> void;
 
     inline auto check_for_flags(std::uint16_t source, std::uint16_t dest,
                                 const std::function<int32_t(uint16_t, uint16_t)>& opr) -> void;
