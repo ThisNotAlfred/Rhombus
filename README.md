@@ -61,7 +61,7 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 
 ## registers
 
-> purposes are just convention and are not enforced.
+> purposes are just convention and are not enforced. but be wary of overwriting the `instruction pointer` or `i0`
 
 | register | purpose |
 | -------- | ------- |
