@@ -18,8 +18,7 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 | instruction | description |
 | ----------- | ----------- |
 | `mov src, dest` | copies data from source to destination |
-| `cmpe src, dest` | compares source to destination. checks for equality |
-| `cmps src, dest` | compares source to destination. checks for source being smaller |
+| `cmp src, dest` | compares source to destination |
 | `jmp dest` | jumps to **program** instruction |
 | `jmpe dest` | jumps to **program** instruction if result of the last instruction was `zero = true` |
 | `jmpb dest` | jumps to **program** instruction if result of the last instruction was `zero = false` and `negative = overflow` |
