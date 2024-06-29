@@ -12,7 +12,6 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 | value-register | `$value` | `register` |
 | register-memory | `register` | `[memory]` |
 
-
 ### control flow
 | instruction | description |
 | ----------- | ----------- |
