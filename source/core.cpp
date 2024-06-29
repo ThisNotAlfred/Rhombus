@@ -19,31 +19,31 @@ Core::start() -> void
 auto
 Core::run_instruction(const Instructions::Instruction& instruction) -> void
 {
-    if (std::holds_alternative<Instructions::NoRegister>(instruction)) {
-        switch (std::get<Instructions::NoRegister>(instruction).instruction) {
-            case Instructions::NoRegister::NOP:
+    if (std::holds_alternative<Instructions::NoOp>(instruction)) {
+        switch (std::get<Instructions::NoOp>(instruction).instruction) {
+            case Instructions::NoOp::NOP:
                 this->stack[0]++;
         }
     }
 
-    else if (std::holds_alternative<Instructions::MemOneRegister>(instruction)) {
-        this->run_mem_one_register(std::get<Instructions::MemOneRegister>(instruction));
+    else if (std::holds_alternative<Instructions::MemOneOp>(instruction)) {
+        this->run_mem_one_register(std::get<Instructions::MemOneOp>(instruction));
     }
 
-    else if (std::holds_alternative<Instructions::OneRegister>(instruction)) {
-        this->run_one_register(std::get<Instructions::OneRegister>(instruction));
+    else if (std::holds_alternative<Instructions::OneOp>(instruction)) {
+        this->run_one_register(std::get<Instructions::OneOp>(instruction));
     }
 
-    else if (std::holds_alternative<Instructions::MemTwoRegister>(instruction)) {
-        this->run_mem_two_register(std::get<Instructions::MemTwoRegister>(instruction));
+    else if (std::holds_alternative<Instructions::MemTwoOp>(instruction)) {
+        this->run_mem_two_register(std::get<Instructions::MemTwoOp>(instruction));
     }
 
-    else if (std::holds_alternative<Instructions::ImmTwoRegister>(instruction)) {
-        this->run_imm_two_register(std::get<Instructions::ImmTwoRegister>(instruction));
+    else if (std::holds_alternative<Instructions::ImmTwoOp>(instruction)) {
+        this->run_imm_two_register(std::get<Instructions::ImmTwoOp>(instruction));
     }
 
-    else if (std::holds_alternative<Instructions::TwoRegister>(instruction)) {
-        this->run_two_register(std::get<Instructions::TwoRegister>(instruction));
+    else if (std::holds_alternative<Instructions::TwoOp>(instruction)) {
+        this->run_two_register(std::get<Instructions::TwoOp>(instruction));
     }
 
     else {
@@ -52,14 +52,14 @@ Core::run_instruction(const Instructions::Instruction& instruction) -> void
 }
 
 auto
-Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> void
+Core::run_mem_one_register(const Instructions::MemOneOp& instruction) -> void
 {
     switch (instruction.instruction) {
-        case Instructions::MemOneRegister::JMP:
+        case Instructions::MemOneOp::JMP:
             this->stack[0] = instruction.dest;
             break;
 
-        case Instructions::MemOneRegister::JMPE:
+        case Instructions::MemOneOp::JMPE:
             if (this->zero_flag) {
                 this->stack[0] = instruction.dest;
             } else {
@@ -67,7 +67,7 @@ Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> v
             }
             break;
 
-        case Instructions::MemOneRegister::JMPB:
+        case Instructions::MemOneOp::JMPB:
             if (this->zero_flag && this->negative_flag == this->overflow_flag) {
                 this->stack[0] = instruction.dest;
             } else {
@@ -75,7 +75,7 @@ Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> v
             }
             break;
 
-        case Instructions::MemOneRegister::JMPS:
+        case Instructions::MemOneOp::JMPS:
             if (this->negative_flag != this->overflow_flag) {
                 this->stack[0] = instruction.dest;
             } else {
@@ -83,12 +83,12 @@ Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> v
             }
             break;
 
-        case Instructions::MemOneRegister::PRINT:
+        case Instructions::MemOneOp::PRINT:
             std::putchar(static_cast<char>(this->stack[instruction.dest]));
             this->stack[0]++;
             break;
 
-        case Instructions::MemOneRegister::SCAN:
+        case Instructions::MemOneOp::SCAN:
             this->memory[instruction.dest] = std::getchar();
             this->stack[0]++;
             break;
@@ -96,15 +96,15 @@ Core::run_mem_one_register(const Instructions::MemOneRegister& instruction) -> v
 }
 
 auto
-Core::run_one_register(const Instructions::OneRegister& instruction) -> void
+Core::run_one_register(const Instructions::OneOp& instruction) -> void
 {
     switch (instruction.instruction) {
-        case Instructions::OneRegister::PRINT:
+        case Instructions::OneOp::PRINT:
             std::putchar(static_cast<char>(this->stack[instruction.dest]));
             this->stack[0]++;
             break;
 
-        case Instructions::OneRegister::SCAN:
+        case Instructions::OneOp::SCAN:
             this->stack[instruction.dest] = std::getchar();
             this->stack[0]++;
             break;
@@ -112,17 +112,17 @@ Core::run_one_register(const Instructions::OneRegister& instruction) -> void
 }
 
 auto
-Core::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> void
+Core::run_mem_two_register(const Instructions::MemTwoOp& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.source);
 
     switch (instruction.instruction) {
-        case Instructions::MemTwoRegister::MOV:
+        case Instructions::MemTwoOp::MOV:
             this->memory[instruction.dest] = value;
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::SHR:
+        case Instructions::MemTwoOp::SHR:
             this->check_for_flags(
                 value, this->memory[instruction.dest],
                 [this](uint16_t src, uint16_t dest) { return this->memory[dest] >> src; });
@@ -130,7 +130,7 @@ Core::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> v
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::SHL:
+        case Instructions::MemTwoOp::SHL:
             this->check_for_flags(
                 value, this->memory[instruction.dest],
                 [this](uint16_t src, uint16_t dest) { return this->memory[dest] << src; });
@@ -138,48 +138,48 @@ Core::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> v
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::ADD:
+        case Instructions::MemTwoOp::ADD:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest + src; });
             this->memory[instruction.dest] += value;
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::SUB:
+        case Instructions::MemTwoOp::SUB:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest - src; });
             this->memory[instruction.dest] -= value;
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::XOR:
+        case Instructions::MemTwoOp::XOR:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest ^ src; });
             this->memory[instruction.dest] ^= value;
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::OR:
+        case Instructions::MemTwoOp::OR:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest | src; });
             this->memory[instruction.dest] |= value;
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::AND:
+        case Instructions::MemTwoOp::AND:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest & src; });
             this->memory[instruction.dest] &= value;
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::CMPRE:
+        case Instructions::MemTwoOp::CMPE:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest == src; });
             stack[0]++;
             break;
 
-        case Instructions::MemTwoRegister::CMPRS:
+        case Instructions::MemTwoOp::CMPS:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest > src; });
             stack[0]++;
@@ -188,72 +188,72 @@ Core::run_mem_two_register(const Instructions::MemTwoRegister& instruction) -> v
 }
 
 auto
-Core::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) -> void
+Core::run_imm_two_register(const Instructions::ImmTwoOp& instruction) -> void
 {
     auto value = static_cast<std::uint16_t>(instruction.value);
 
     switch (instruction.instruction) {
-        case Instructions::ImmTwoRegister::MOV:
+        case Instructions::ImmTwoOp::MOV:
             this->stack[instruction.dest] = value;
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::SHR:
+        case Instructions::ImmTwoOp::SHR:
             this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest >> src; });
             this->stack[instruction.dest] >>= value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::SHL:
+        case Instructions::ImmTwoOp::SHL:
             this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest << src; });
             this->stack[instruction.dest] <<= value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::ADD:
+        case Instructions::ImmTwoOp::ADD:
             this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest + src; });
             this->stack[instruction.dest] += value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::SUB:
+        case Instructions::ImmTwoOp::SUB:
             this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest - src; });
             this->stack[instruction.dest] -= value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::XOR:
+        case Instructions::ImmTwoOp::XOR:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest ^ src; });
             this->stack[instruction.dest] ^= value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::OR:
+        case Instructions::ImmTwoOp::OR:
             this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest | src; });
             this->stack[instruction.dest] |= value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::AND:
+        case Instructions::ImmTwoOp::AND:
             this->check_for_flags(value, this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest & src; });
             this->stack[instruction.dest] &= value;
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::CMPRE:
+        case Instructions::ImmTwoOp::CMPE:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest == src; });
             this->stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::CMPRS:
+        case Instructions::ImmTwoOp::CMPS:
             this->check_for_flags(value, this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest > src; });
             this->stack[0]++;
@@ -262,70 +262,70 @@ Core::run_imm_two_register(const Instructions::ImmTwoRegister& instruction) -> v
 }
 
 auto
-Core::run_two_register(const Instructions::TwoRegister& instruction) -> void
+Core::run_two_register(const Instructions::TwoOp& instruction) -> void
 {
     switch (instruction.instruction) {
-        case Instructions::ImmTwoRegister::MOV:
+        case Instructions::ImmTwoOp::MOV:
             this->stack[instruction.dest] = this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::SHR:
+        case Instructions::ImmTwoOp::SHR:
             this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest >> src; });
             this->stack[instruction.dest] >>= this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::SHL:
+        case Instructions::ImmTwoOp::SHL:
             this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest << src; });
             this->stack[instruction.dest] <<= this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::ADD:
+        case Instructions::ImmTwoOp::ADD:
             this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest + src; });
             this->stack[instruction.dest] += this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::SUB:
+        case Instructions::ImmTwoOp::SUB:
             this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest - src; });
             this->stack[instruction.dest] -= this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::XOR:
+        case Instructions::ImmTwoOp::XOR:
             this->check_for_flags(this->stack[instruction.source], this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest ^ src; });
             this->stack[instruction.dest] ^= this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::OR:
+        case Instructions::ImmTwoOp::OR:
             this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest | src; });
             this->stack[instruction.dest] |= this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::AND:
+        case Instructions::ImmTwoOp::AND:
             this->check_for_flags(this->stack[instruction.source], this->stack[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest & src; });
             this->stack[instruction.dest] &= this->stack[instruction.source];
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::CMPRE:
+        case Instructions::ImmTwoOp::CMPE:
             this->check_for_flags(this->stack[instruction.source], this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest == src; });
             stack[0]++;
             break;
 
-        case Instructions::ImmTwoRegister::CMPRS:
+        case Instructions::ImmTwoOp::CMPS:
             this->check_for_flags(this->stack[instruction.source], this->memory[instruction.dest],
                                   [](uint16_t src, uint16_t dest) { return dest > src; });
             stack[0]++;

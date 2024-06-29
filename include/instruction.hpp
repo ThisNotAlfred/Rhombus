@@ -76,8 +76,8 @@ struct TwoOp {
         XOR,
         OR,
         AND,
-        CMPRE,
-        CMPRS,
+        CMPE,
+        CMPS,
     } instruction;
 
     Register source;
@@ -94,8 +94,8 @@ struct ImmTwoOp {
         XOR,
         OR,
         AND,
-        CMPRE,
-        CMPRS,
+        CMPE,
+        CMPS,
     } instruction;
 
     std::uint16_t value;
@@ -112,8 +112,8 @@ struct MemTwoOp {
         XOR,
         OR,
         AND,
-        CMPRE,
-        CMPRS,
+        CMPE,
+        CMPS,
     } instruction;
 
     Register source;
@@ -130,8 +130,8 @@ struct IndexTwoOp {
         XOR,
         OR,
         AND,
-        CMPRE,
-        CMPRS,
+        CMPE,
+        CMPS,
     } instruction;
 
     Register index_register;

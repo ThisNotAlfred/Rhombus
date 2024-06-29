@@ -530,7 +530,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
         return Instructions::ImmTwoOp {
-            Instructions::ImmTwoOp::CMPRE,
+            Instructions::ImmTwoOp::CMPE,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
@@ -538,7 +538,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
 
     if (this->tokens[index + 2][0] == '[') {
         return Instructions::MemTwoOp {
-            Instructions::MemTwoOp::CMPRE,
+            Instructions::MemTwoOp::CMPE,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
@@ -548,7 +548,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
         const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
 
         return Instructions::IndexTwoOp {
-            Instructions::IndexTwoOp::CMPRE,
+            Instructions::IndexTwoOp::CMPE,
             data_index,
             this->labels[label],
             get_register(this->tokens[index + 2]),
@@ -556,7 +556,7 @@ Parser::parse_cmpe(std::size_t index) -> Instructions::Instruction
     }
 
     return Instructions::TwoOp {
-        Instructions::TwoOp::CMPRE,
+        Instructions::TwoOp::CMPE,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
@@ -567,7 +567,7 @@ Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
 {
     if (this->tokens[index + 1][0] == '$') {
         return Instructions::ImmTwoOp {
-            Instructions::ImmTwoOp::CMPRS,
+            Instructions::ImmTwoOp::CMPS,
             parse_value(this->tokens[index + 1]),
             get_register(this->tokens[index + 2]),
         };
@@ -575,7 +575,7 @@ Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
 
     if (this->tokens[index + 2][0] == '[') {
         return Instructions::MemTwoOp {
-            Instructions::MemTwoOp::CMPRS,
+            Instructions::MemTwoOp::CMPS,
             get_register(this->tokens[index + 1]),
             parse_brackets(this->tokens[index + 2]),
         };
@@ -585,7 +585,7 @@ Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
         const auto [label, data_index] = parse_variable(this->tokens[index + 1]);
 
         return Instructions::IndexTwoOp {
-            Instructions::IndexTwoOp::CMPRS,
+            Instructions::IndexTwoOp::CMPS,
             data_index,
             this->labels[label],
             get_register(this->tokens[index + 2]),
@@ -593,7 +593,7 @@ Parser::parse_cmps(std::size_t index) -> Instructions::Instruction
     }
 
     return Instructions::TwoOp {
-        Instructions::TwoOp::CMPRS,
+        Instructions::TwoOp::CMPS,
         get_register(this->tokens[index + 1]),
         get_register(this->tokens[index + 2]),
     };
