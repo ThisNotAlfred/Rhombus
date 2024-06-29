@@ -45,7 +45,7 @@ a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV.
 ### data
 | instruction | description |
 | ----------- | ----------- |
-| `db data, $data_size | this instruction gives a pointer relative to program's beginning for use later |
+| `db data, data_size` | this instruction gives a pointer relative to program's beginning for use later |
 
 ## flags 
 
