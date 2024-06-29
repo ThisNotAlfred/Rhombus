@@ -14,7 +14,7 @@ class Tokenizer
     auto tokenize_brackets() -> std::string;
     auto tokenize_instruction() -> std::string;
     auto tokenize_string() -> std::string;
-    auto tokenize_variable() -> std::string;
+    auto tokenize_global() -> std::string;
     auto skip_comment() -> void;
 
         private:

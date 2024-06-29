@@ -1,10 +1,9 @@
-#include "parser.hpp"
 #include "core.hpp"
+#include "parser.hpp"
 #include "tokenizer.hpp"
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <print>
 
 auto

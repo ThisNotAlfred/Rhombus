@@ -24,8 +24,9 @@ Tokenizer::tokenize() -> std::vector<std::string>
             tokens.push_back(this->tokenize_string());
         }
 
-        else if (this->content[this->current_header] == '#') {
-            tokens.push_back(this->tokenize_variable());
+        else if (this->content[this->current_header] == '#' ||
+                 this->content[this->current_header] == '@') {
+            tokens.push_back(this->tokenize_global());
         }
 
         else if (this->content[this->current_header] == '[') {
@@ -98,10 +99,13 @@ Tokenizer::tokenize_string() -> std::string
 
     while (this->current_header < this->content.size() &&
            this->content[this->current_header] != '\n' &&
-           this->content[this->current_header] != '\r' &&
-           this->content[this->current_header] != '"') {
+           this->content[this->current_header] != '\r') {
         temp_token.push_back(this->content[this->current_header]);
         this->current_header++;
+        if (this->content[current_header] == '"') {
+            this->current_header++;
+            break;
+        }
     }
 
     auto token = std::string { temp_token.begin(), temp_token.end() };
@@ -110,7 +114,7 @@ Tokenizer::tokenize_string() -> std::string
 }
 
 auto
-Tokenizer::tokenize_variable() -> std::string
+Tokenizer::tokenize_global() -> std::string
 {
     std::vector<char> temp_token = {};
 
