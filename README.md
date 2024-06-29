@@ -91,11 +91,10 @@ the machine has 64KB of fixed-size memory that you have direct access. your prog
 @STR
     db "HELLO, WORLD!"
     
-    mov $0, i9
 @PRINT_LOOP
     print #STR[i9]
     add $1, i9
-    cmps $14, i9
+    cmp $13, i9
     jmps @PRINT_LOOP
 ```
 ## basic repeater
