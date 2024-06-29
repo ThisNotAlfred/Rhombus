@@ -1,4 +1,4 @@
-@STR1
+@STR
     db "HELLO, WORLD!", $13
     
     mov $0, i9
