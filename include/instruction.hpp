@@ -25,7 +25,7 @@ enum Register {
     i15,
 };
 
-using MemoryCell = std::size_t;
+using Pointer = std::size_t;
 
 struct NoOp {
     enum { NOP } instruction;
@@ -50,9 +50,17 @@ struct MemOneOp {
         SCAN,
     } instruction;
 
-    MemoryCell dest;
+    Pointer dest;
 };
 
+struct IndexOneOp {
+    enum {
+        PRINT,
+    } instruction;
+
+    std::uint16_t index;
+    Pointer beginning_of_data;
+};
 
 struct TwoOp {
     enum {
@@ -105,7 +113,25 @@ struct MemTwoOp {
     } instruction;
 
     Register source;
-    MemoryCell dest;
+    Pointer dest;
+};
+
+struct IndexTwoOp {
+    enum {
+        MOV,
+        SHR,
+        SHL,
+        ADD,
+        SUB,
+        XOR,
+        OR,
+        AND,
+        CMPRE,
+        CMPRS,
+    } instruction;
+
+    std::uint16_t index;
+    Pointer beginning_of_data;
 };
 
 struct DataTwoOp {
@@ -117,5 +143,6 @@ struct DataTwoOp {
     std::size_t data_size;
 };
 
-using Instruction = std::variant<NoOp, OneOp, MemOneOp, TwoOp, ImmTwoOp, MemTwoOp, DataTwoOp>;
+using Instruction = std::variant<NoOp, OneOp, MemOneOp, IndexOneOp, TwoOp, ImmTwoOp, MemTwoOp,
+                                 IndexTwoOp, DataTwoOp>;
 } // namespace Instructions
