@@ -2,8 +2,8 @@
 a stack-less PDP-11-ish virtual machine inspired by ARM and RISCV. 
 
 ## instructions
-| instruction type | arg | arg |
-| ----------- | -------------- | --------------- |
+| instruction type | argument type | argument type |
+| ---------------- | ------------- | ------------- |
 | no argument | - | - |
 | label | `@label` | - |
 | register | `register` | - |
