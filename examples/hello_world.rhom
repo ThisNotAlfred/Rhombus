@@ -1,0 +1,9 @@
+@STR1
+    db "HELLO, WORLD!", $23
+    
+    mov $0, i9
+@PRINT_LOOP
+    print #STR[i9]
+    add $1, i9
+    cmps $14, i9
+    jmps @PRINT_LOOP
